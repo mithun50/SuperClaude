@@ -141,3 +141,13 @@ Each component follows single-responsibility principle with graceful degradation
 ## License
 
 MIT - See LICENSE file for details
+
+## Star History
+
+<a href="https://www.star-history.com/#NomenAK/SuperClaude&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=NomenAK/SuperClaude&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=NomenAK/SuperClaude&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=NomenAK/SuperClaude&type=Date" />
+ </picture>
+</a>
