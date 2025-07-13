@@ -144,6 +144,10 @@ The v3 architecture prioritizes:
 
 Each component follows single-responsibility principle with graceful degradation when dependencies are unavailable.
 
+## SuperClaude Current Contributors
+
+[![Contributors](https://contrib.rocks/image?repo=NomenAk/SuperClaude)](https://github.com/NomenAK/SuperClaude/graphs/contributors)
+
 ## License
 
 MIT - [See LICENSE file for details](https://opensource.org/licenses/MIT)
