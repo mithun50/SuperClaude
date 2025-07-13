@@ -12,6 +12,7 @@ if [[ "${SUPERCLAUDE_OS_DETECTION_LOADED:-}" == "true" ]]; then
 fi
 readonly SUPERCLAUDE_OS_DETECTION_LOADED="true"
 
+
 # Detect operating system
 detect_os() {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
