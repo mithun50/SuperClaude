@@ -182,7 +182,8 @@ MIT - [See LICENSE file for details](https://opensource.org/licenses/MIT)
    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=NomenAK/SuperClaude&type=Date" />
  </picture>
 </a>
-
 ---
 
 *Built by developers, for developers. We hope you find it useful! 🙂*
+
+---
