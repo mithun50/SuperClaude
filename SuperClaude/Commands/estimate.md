@@ -3,14 +3,14 @@ allowed-tools: [Read, Grep, Glob, Bash]
 description: "Provide development estimates for tasks, features, or projects"
 ---
 
-# /estimate - Development Estimation
+# /sc:estimate - Development Estimation
 
 ## Purpose
 Generate accurate development estimates for tasks, features, or projects based on complexity analysis.
 
 ## Usage
 ```
-/estimate [target] [--type time|effort|complexity|cost] [--unit hours|days|weeks]
+/sc:estimate [target] [--type time|effort|complexity|cost] [--unit hours|days|weeks]
 ```
 
 ## Arguments

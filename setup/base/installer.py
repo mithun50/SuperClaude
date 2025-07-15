@@ -217,7 +217,7 @@ class Installer:
                 
             if success:
                 self.installed_components.add(component_name)
-                self._update_settings_registry(component)
+                # Component handles its own metadata registration
             else:
                 self.failed_components.add(component_name)
                 
@@ -296,8 +296,7 @@ class Installer:
                 return True
             else:
                 success = component.uninstall()
-                if success:
-                    self._remove_from_settings_registry(component_name)
+                # Component handles its own metadata removal
                 return success
         except Exception as e:
             print(f"Error uninstalling {component_name}: {e}")

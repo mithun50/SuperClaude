@@ -241,9 +241,9 @@ def create_backup_metadata(install_dir: Path) -> Dict[str, Any]:
     }
     
     try:
-        # Get installed components
+        # Get installed components from metadata
         settings_manager = SettingsManager(install_dir)
-        framework_config = settings_manager.get_setting("framework")
+        framework_config = settings_manager.get_metadata_setting("framework")
         
         if framework_config:
             metadata["framework_version"] = framework_config.get("version", "unknown")

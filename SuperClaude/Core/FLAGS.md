@@ -34,12 +34,12 @@ Flag system for Claude Code SuperClaude framework with auto-activation and confl
 - Critical system redesign analysis (~32K tokens)
 - Maximum depth analysis for complex problems
 - Auto-activates: Legacy modernization, critical vulnerabilities, performance degradation >50%
-- Auto-enables `--seq --c7 --all-mcp` and suggests `--enterprise-waves`
+- Auto-enables `--seq --c7 --all-mcp` for comprehensive analysis
 
 ## Compression & Efficiency Flags
 
 **`--uc` / `--ultracompressed`**
-- 60-80% token reduction using symbols and structured output
+- 30-50% token reduction using symbols and structured output
 - Auto-activates: Context usage >75% or large-scale operations
 - Auto-generated symbol legend, maintains technical accuracy
 

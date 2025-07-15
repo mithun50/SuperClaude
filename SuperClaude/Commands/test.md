@@ -3,14 +3,14 @@ allowed-tools: [Read, Bash, Glob, TodoWrite, Edit, Write]
 description: "Execute tests, generate test reports, and maintain test coverage"
 ---
 
-# /test - Testing and Quality Assurance
+# /sc:test - Testing and Quality Assurance
 
 ## Purpose
 Execute tests, generate comprehensive test reports, and maintain test coverage standards.
 
 ## Usage
 ```
-/test [target] [--type unit|integration|e2e|all] [--coverage] [--watch]
+/sc:test [target] [--type unit|integration|e2e|all] [--coverage] [--watch]
 ```
 
 ## Arguments

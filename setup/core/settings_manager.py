@@ -23,6 +23,7 @@ class SettingsManager:
         """
         self.install_dir = install_dir
         self.settings_file = install_dir / "settings.json"
+        self.metadata_file = install_dir / ".superclaude-metadata.json"
         self.backup_dir = install_dir / "backups" / "settings"
         
     def load_settings(self) -> Dict[str, Any]:
@@ -62,6 +63,77 @@ class SettingsManager:
                 json.dump(settings, f, indent=2, ensure_ascii=False, sort_keys=True)
         except IOError as e:
             raise ValueError(f"Could not save settings to {self.settings_file}: {e}")
+    
+    def load_metadata(self) -> Dict[str, Any]:
+        """
+        Load SuperClaude metadata from .superclaude-metadata.json
+        
+        Returns:
+            Metadata dict (empty if file doesn't exist)
+        """
+        if not self.metadata_file.exists():
+            return {}
+        
+        try:
+            with open(self.metadata_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            raise ValueError(f"Could not load metadata from {self.metadata_file}: {e}")
+    
+    def save_metadata(self, metadata: Dict[str, Any]) -> None:
+        """
+        Save SuperClaude metadata to .superclaude-metadata.json
+        
+        Args:
+            metadata: Metadata dict to save
+        """
+        # Ensure directory exists
+        self.metadata_file.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Save with pretty formatting
+        try:
+            with open(self.metadata_file, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, indent=2, ensure_ascii=False, sort_keys=True)
+        except IOError as e:
+            raise ValueError(f"Could not save metadata to {self.metadata_file}: {e}")
+    
+    def migrate_superclaude_data(self) -> bool:
+        """
+        Migrate SuperClaude-specific data from settings.json to metadata file
+        
+        Returns:
+            True if migration occurred, False if no data to migrate
+        """
+        settings = self.load_settings()
+        
+        # SuperClaude-specific fields to migrate
+        superclaude_fields = ["components", "framework", "superclaude", "mcp"]
+        data_to_migrate = {}
+        fields_found = False
+        
+        # Extract SuperClaude data
+        for field in superclaude_fields:
+            if field in settings:
+                data_to_migrate[field] = settings[field]
+                fields_found = True
+        
+        if not fields_found:
+            return False
+        
+        # Load existing metadata (if any) and merge
+        existing_metadata = self.load_metadata()
+        merged_metadata = self._deep_merge(existing_metadata, data_to_migrate)
+        
+        # Save to metadata file
+        self.save_metadata(merged_metadata)
+        
+        # Remove SuperClaude fields from settings
+        clean_settings = {k: v for k, v in settings.items() if k not in superclaude_fields}
+        
+        # Save cleaned settings
+        self.save_settings(clean_settings, create_backup=True)
+        
+        return True
     
     def merge_settings(self, modifications: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -163,25 +235,26 @@ class SettingsManager:
     
     def add_component_registration(self, component_name: str, component_info: Dict[str, Any]) -> None:
         """
-        Add component to registry in settings
+        Add component to registry in metadata
         
         Args:
             component_name: Name of component
             component_info: Component metadata dict
         """
-        modification = {
-            "components": {
-                component_name: {
-                    **component_info,
-                    "installed_at": datetime.now().isoformat()
-                }
-            }
+        metadata = self.load_metadata()
+        if "components" not in metadata:
+            metadata["components"] = {}
+        
+        metadata["components"][component_name] = {
+            **component_info,
+            "installed_at": datetime.now().isoformat()
         }
-        self.update_settings(modification)
+        
+        self.save_metadata(metadata)
     
     def remove_component_registration(self, component_name: str) -> bool:
         """
-        Remove component from registry in settings
+        Remove component from registry in metadata
         
         Args:
             component_name: Name of component to remove
@@ -189,7 +262,12 @@ class SettingsManager:
         Returns:
             True if component was removed, False if not found
         """
-        return self.remove_setting(f"components.{component_name}")
+        metadata = self.load_metadata()
+        if "components" in metadata and component_name in metadata["components"]:
+            del metadata["components"][component_name]
+            self.save_metadata(metadata)
+            return True
+        return False
     
     def get_installed_components(self) -> Dict[str, Dict[str, Any]]:
         """
@@ -198,7 +276,8 @@ class SettingsManager:
         Returns:
             Dict of component_name -> component_info
         """
-        return self.get_setting("components", {})
+        metadata = self.load_metadata()
+        return metadata.get("components", {})
     
     def is_component_installed(self, component_name: str) -> bool:
         """
@@ -229,27 +308,51 @@ class SettingsManager:
     
     def update_framework_version(self, version: str) -> None:
         """
-        Update SuperClaude framework version in settings
+        Update SuperClaude framework version in metadata
         
         Args:
             version: Framework version string
         """
-        modification = {
-            "framework": {
-                "version": version,
-                "updated_at": datetime.now().isoformat()
-            }
-        }
-        self.update_settings(modification)
+        metadata = self.load_metadata()
+        if "framework" not in metadata:
+            metadata["framework"] = {}
+        
+        metadata["framework"]["version"] = version
+        metadata["framework"]["updated_at"] = datetime.now().isoformat()
+        
+        self.save_metadata(metadata)
     
     def get_framework_version(self) -> Optional[str]:
         """
-        Get SuperClaude framework version from settings
+        Get SuperClaude framework version from metadata
         
         Returns:
             Version string or None if not set
         """
-        return self.get_setting("framework.version")
+        metadata = self.load_metadata()
+        framework = metadata.get("framework", {})
+        return framework.get("version")
+    
+    def get_metadata_setting(self, key_path: str, default: Any = None) -> Any:
+        """
+        Get metadata value using dot-notation path
+        
+        Args:
+            key_path: Dot-separated path (e.g., "framework.version")
+            default: Default value if key not found
+            
+        Returns:
+            Metadata value or default
+        """
+        metadata = self.load_metadata()
+        
+        try:
+            value = metadata
+            for key in key_path.split('.'):
+                value = value[key]
+            return value
+        except (KeyError, TypeError):
+            return default
     
     def _deep_merge(self, base: Dict[str, Any], overlay: Dict[str, Any]) -> Dict[str, Any]:
         """

@@ -28,8 +28,6 @@ Analyzes requests to understand intent, complexity, and requirements.
 
 **Validation Logic**: Resource availability, flag compatibility, risk assessment, outcome prediction, and safety recommendations. Operations with risk scores >0.8 trigger safe mode suggestions.
 
-*Implementation: See `Scripts/orchestrator_implementation.py` - `validate_operation()`*
-
 **Resource Management Thresholds**:
 - **Green Zone** (0-60%): Full operations, predictive monitoring active
 - **Yellow Zone** (60-75%): Resource optimization, caching, suggest --uc mode
@@ -72,12 +70,12 @@ complex:
 #### Domain Identification
 ```yaml
 frontend:
-  keywords: [UI, component, React, Vue, CSS, responsive, accessibility]
+  keywords: [UI, component, React, Vue, CSS, responsive, accessibility, implement component, build UI]
   file_patterns: ["*.jsx", "*.tsx", "*.vue", "*.css", "*.scss"]
-  typical_operations: [create, style, optimize, test]
+  typical_operations: [create, implement, style, optimize, test]
 
 backend:
-  keywords: [API, database, server, endpoint, authentication, performance]
+  keywords: [API, database, server, endpoint, authentication, performance, implement API, build service]
   file_patterns: ["*.js", "*.ts", "*.py", "*.go", "controllers/*", "models/*"]
   typical_operations: [implement, optimize, secure, scale]
 
@@ -121,6 +119,11 @@ creation:
   outputs: [new files, features, components]
   typical_tools: [Write, Magic, Context7]
 
+implementation:
+  verbs: [implement, develop, code, construct, realize]
+  outputs: [working features, functional code, integrated components]
+  typical_tools: [Write, Edit, MultiEdit, Magic, Context7, Sequential]
+
 modification:
   verbs: [update, refactor, improve, optimize, fix]
   outputs: [edited files, improvements]
@@ -161,8 +164,6 @@ wave_operations:
 - **Thresholds**: Default 0.7, customizable via `--wave-threshold`, enterprise strategy lowers file thresholds
 - **Decision Logic**: Sum all indicators, trigger waves when total ≥ threshold
 
-*Implementation: See `Scripts/orchestrator_implementation.py` - `detect_wave_eligibility()`*
-
 ## 🚦 Routing Intelligence
 
 Dynamic decision trees that map detected patterns to optimal tool combinations, persona activation, and orchestration strategies.
@@ -184,8 +185,8 @@ wave-strategies:
 ```
 
 **Wave-Enabled Commands**:
-- **Tier 1**: `/analyze`, `/improve`, `/build`, `/scan`, `/review`
-- **Tier 2**: `/design`, `/troubleshoot`, `/task`
+- **Tier 1**: `/analyze`, `/build`, `/implement`, `/improve`
+- **Tier 2**: `/design`, `/task`
 
 ### Master Routing Table
 
@@ -193,6 +194,10 @@ wave-strategies:
 |---------|------------|---------|----------------|------------|
 | "analyze architecture" | complex | infrastructure | architect persona, --ultrathink, Sequential | 95% |
 | "create component" | simple | frontend | frontend persona, Magic, --uc | 90% |
+| "implement feature" | moderate | any | domain-specific persona, Context7, Sequential | 88% |
+| "implement API" | moderate | backend | backend persona, --seq, Context7 | 92% |
+| "implement UI component" | simple | frontend | frontend persona, Magic, --c7 | 94% |
+| "implement authentication" | complex | security | security persona, backend persona, --validate | 90% |
 | "fix bug" | moderate | any | analyzer persona, --think, Sequential | 85% |
 | "optimize performance" | complex | backend | performance persona, --think-hard, Playwright | 90% |
 | "security audit" | complex | security | security persona, --ultrathink, Sequential | 95% |
@@ -226,8 +231,6 @@ wave-strategies:
 - High complexity + critical quality → `--wave-mode --wave-validation`
 - Multiple operation types → `--wave-mode --adaptive-waves`
 
-*Implementation: See `Scripts/orchestrator_implementation.py` - `select_tools()`*
-
 #### Task Delegation Intelligence
 
 **Sub-Agent Delegation Decision Matrix**:
@@ -260,8 +263,6 @@ wave-strategies:
 - **Multiple Operations**: `adaptive_waves`
 - **Enterprise Scale**: `enterprise_waves`
 - **Default**: `systematic_waves`
-
-*Implementation: See `Scripts/orchestrator_implementation.py` - delegation & wave evaluation functions*
 
 **Auto-Delegation Triggers**:
 ```yaml
@@ -530,8 +531,3 @@ orchestrator_config:
 
 ### Custom Routing Rules
 Users can add custom routing patterns via YAML configuration files.
-
-
----
-
-

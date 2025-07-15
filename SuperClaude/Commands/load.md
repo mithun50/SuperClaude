@@ -3,14 +3,14 @@ allowed-tools: [Read, Grep, Glob, Bash, Write]
 description: "Load and analyze project context, configurations, and dependencies"
 ---
 
-# /load - Project Context Loading
+# /sc:load - Project Context Loading
 
 ## Purpose
 Load and analyze project context, configurations, dependencies, and environment setup.
 
 ## Usage
 ```
-/load [target] [--type project|config|deps|env] [--cache]
+/sc:load [target] [--type project|config|deps|env] [--cache]
 ```
 
 ## Arguments

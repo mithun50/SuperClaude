@@ -5,29 +5,29 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/NomenAK/SuperClaude/blob/master/CONTRIBUTING.md)
 [![Contributors](https://img.shields.io/github/contributors/NomenAK/SuperClaude)](https://github.com/NomenAK/SuperClaude/graphs/contributors)
 
-An enhancement framework for Claude Code that adds extra capabilities through specialized commands, personas, and MCP server integration.
+A framework that extends Claude Code with specialized commands, personas, and MCP server integration.
 
 **📢 Status**: Initial release, fresh out of beta! Bugs may occur as we continue improving things.
 
 ## What is SuperClaude? 🤔
 
-SuperClaude extends Claude Code with:
-- 🛠️ **15 specialized commands** for development, analysis, and quality tasks
-- 🎭 **Smart personas** that adapt behavior for different domains (frontend, security, architecture, etc.)
-- 🔧 **MCP server integration** for documentation lookup, UI components, and browser automation
-- 📋 **Enhanced task management** with progress tracking and validation
-- ⚡ **Token optimization** for more efficient conversations
+SuperClaude tries to make Claude Code more helpful for development work by adding:
+- 🛠️ **16 specialized commands** for common dev tasks (some work better than others!)
+- 🎭 **Smart personas** that usually pick the right expert for different domains 
+- 🔧 **MCP server integration** for docs, UI components, and browser automation
+- 📋 **Task management** that tries to keep track of progress
+- ⚡ **Token optimization** to help with longer conversations
 
-We built this because we wanted Claude Code to be even more helpful for software development workflows.
+This is what we've been building to make development workflows smoother. Still rough around the edges, but getting better! 😊
 
 ## Current Status 📊
 
 ✅ **What's Working Well:**
-- Installation suite (completely rewritten, much more reliable)
+- Installation suite (rewritten from the ground up)
 - Core framework with 9 documentation files 
-- 15 slash commands for various development tasks
+- 16 slash commands for various development tasks
 - MCP server integration (Context7, Sequential, Magic, Playwright)
-- Unified CLI installer that actually works
+- Unified CLI installer for easy setup
 
 ⚠️ **Known Issues:**
 - This is an initial release - bugs are expected
@@ -38,42 +38,79 @@ We built this because we wanted Claude Code to be even more helpful for software
 ## Key Features ✨
 
 ### Commands 🛠️
-We've streamlined from 20+ commands down to 15 essential ones:
+We focused on 16 essential commands for the most common tasks:
 
-**Development**: `/build`, `/dev-setup`  
-**Analysis**: `/analyze`, `/review`, `/troubleshoot`  
-**Quality**: `/improve`, `/scan`, `/test`  
-**Others**: `/document`, `/deploy`, `/git`, `/migrate`, `/estimate`, `/task`, `/design`
+**Development**: `/sc:implement`, `/sc:build`, `/sc:design`  
+**Analysis**: `/sc:analyze`, `/sc:troubleshoot`, `/sc:explain`  
+**Quality**: `/sc:improve`, `/sc:test`, `/sc:cleanup`  
+**Others**: `/sc:document`, `/sc:git`, `/sc:estimate`, `/sc:task`, `/sc:index`, `/sc:load`, `/sc:spawn`
 
 ### Smart Personas 🎭
-Auto-activating specialists that adapt Claude's behavior:
-- 🏗️ **architect** - Systems design and architecture
+AI specialists that try to jump in when they seem relevant:
+- 🏗️ **architect** - Systems design and architecture stuff
 - 🎨 **frontend** - UI/UX and accessibility  
 - ⚙️ **backend** - APIs and infrastructure
-- 🔍 **analyzer** - Investigation and root cause analysis
-- 🛡️ **security** - Threat modeling and vulnerabilities
-- ✍️ **scribe** - Documentation and technical writing
-- *...and 5 more*
+- 🔍 **analyzer** - Debugging and figuring things out
+- 🛡️ **security** - Security concerns and vulnerabilities
+- ✍️ **scribe** - Documentation and writing
+- *...and 5 more specialists*
+
+*(They don't always pick perfectly, but usually get it right!)*
 
 ### MCP Integration 🔧
-Specialized servers for different tasks:
-- **Context7** - Official library documentation and patterns
-- **Sequential** - Complex multi-step analysis and reasoning  
-- **Magic** - Modern UI component generation
-- **Playwright** - Browser automation and E2E testing
+External tools that connect when useful:
+- **Context7** - Grabs official library docs and patterns 
+- **Sequential** - Helps with complex multi-step thinking  
+- **Magic** - Generates modern UI components 
+- **Playwright** - Browser automation and testing stuff
+
+*(These work pretty well when they connect properly! 🤞)*
+
+## ⚠️ Upgrading from v2? Important!
+
+If you're coming from SuperClaude v2, you'll need to clean up first:
+
+1. **Uninstall v2** using its uninstaller if available
+2. **Manual cleanup** - delete these if they exist:
+   - `SuperClaude/`
+   - `~/.claude/shared/`
+   - `~/.claude/commands/` 
+   - `~/.claude/CLAUDE.md`
+4. **Then proceed** with v3 installation below
+
+This is because v3 has a different structure and the old files can cause conflicts.
+
+### 🔄 **Key Change for v2 Users**
+**The `/build` command changed!** In v2, `/build` was used for feature implementation. In v3:
+- `/sc:build` = compilation/packaging only 
+- `/sc:implement` = feature implementation (NEW!)
+
+**Migration**: Replace `v2 /build myFeature` with `v3 /sc:implement myFeature`
 
 ## Installation 📦
 
 ### Quick Start
 ```bash
 # Clone the repo
-git clone <repository-url>
+git clone https://github.com/NomenAK/SuperClaude.git
 cd SuperClaude
 
 # Install with our unified CLI
 python3 SuperClaude.py install --quick
 
 # That's it! 🎉
+```
+
+**Missing Python?**
+```bash
+# Linux (Ubuntu/Debian)
+sudo apt update && sudo apt install python3 python3-pip
+
+# macOS  
+brew install python3
+
+# Windows
+# Download from https://python.org/downloads/
 ```
 
 ### Other Installation Options
@@ -95,23 +132,25 @@ The installer handles everything: framework files, MCP servers, and Claude Code 
 
 ## How It Works 🔄
 
-SuperClaude enhances Claude Code through:
+SuperClaude tries to enhance Claude Code through:
 
-1. **Framework Files** - Core documentation installed to `~/.claude/` that guides Claude's behavior
-2. **Slash Commands** - 15 specialized commands for different development tasks  
-3. **MCP Servers** - External services that add capabilities like documentation lookup and UI generation
-4. **Smart Routing** - Automatic selection of tools and personas based on your requests
+1. **Framework Files** - Documentation installed to `~/.claude/` that guides how Claude responds
+2. **Slash Commands** - 16 specialized commands for different dev tasks  
+3. **MCP Servers** - External services that add extra capabilities (when they work!)
+4. **Smart Routing** - Attempts to pick the right tools and experts based on what you're doing
 
-Everything is designed to work seamlessly with Claude Code's existing functionality.
+Most of the time it plays nicely with Claude Code's existing stuff. 🤝
 
 ## What's Coming in v4 🔮
 
-We're working on the next version which will include:
-- **Hooks System** - Event-driven enhancements (removed from v3, being redesigned)
-- **MCP Suite** - Expanded server ecosystem  
-- **Better Performance** - Faster response times and smarter caching
-- **More Personas** - Additional domain specialists
-- **Cross-CLI Support** - Work with other AI coding assistants
+We're hoping to work on these things for the next version:
+- **Hooks System** - Event-driven stuff (removed from v3, trying to redesign it properly)
+- **MCP Suite** - More external tool integrations  
+- **Better Performance** - Trying to make things faster and less buggy
+- **More Personas** - Maybe a few more domain specialists
+- **Cross-CLI Support** - Might work with other AI coding assistants
+
+*(No promises on timeline though - we're still figuring v3 out! 😅)*
 
 ## Configuration ⚙️
 
@@ -119,7 +158,19 @@ After installation, you can customize SuperClaude by editing:
 - `~/.claude/settings.json` - Main configuration
 - `~/.claude/*.md` - Framework behavior files
 
-Most users won't need to change anything - it works well out of the box.
+Most users probably won't need to change anything - it usually works okay out of the box. 🎛️
+
+## Documentation 📖
+
+Want to learn more? Check out our guides:
+
+- 📚 [**User Guide**](Docs/superclaude-user-guide.md) - Complete overview and getting started
+- 🛠️ [**Commands Guide**](Docs/commands-guide.md) - All 16 slash commands explained  
+- 🏳️ [**Flags Guide**](Docs/flags-guide.md) - Command flags and options
+- 🎭 [**Personas Guide**](Docs/personas-guide.md) - Understanding the persona system
+- 📦 [**Installation Guide**](Docs/installation-guide.md) - Detailed installation instructions
+
+These guides have more details than this README and are kept up to date.
 
 ## Contributing 🤝
 
@@ -135,10 +186,10 @@ The codebase is pretty straightforward Python + documentation files.
 
 ```
 SuperClaude/
-├── SuperClaude.py          # Main installer CLI
-├── SuperClaude/            # Framework files  
+├── SuperClaude.py         # Main installer CLI
+├── SuperClaude/           # Framework files  
 │   ├── Core/              # Behavior documentation (COMMANDS.md, FLAGS.md, etc.)
-│   ├── Commands/          # 15 slash command definitions
+│   ├── Commands/          # 16 slash command definitions
 │   └── Settings/          # Configuration files
 ├── setup/                 # Installation system
 └── profiles/              # Installation profiles (quick, minimal, developer)
@@ -152,7 +203,7 @@ The v3 architecture focuses on:
 - **Modularity** - Pick only the components you want
 - **Performance** - Faster operations with smarter caching
 
-We learned a lot from v2 and tried to fix the things that were frustrating.
+We learned a lot from v2 and tried to address the main pain points.
 
 ## FAQ 🙋
 
@@ -163,7 +214,7 @@ A: It was getting complex and buggy. We're redesigning it properly for v4.
 A: Currently Claude Code only, but v4 will have broader compatibility.
 
 **Q: Is this stable enough for daily use?**  
-A: The core features work well, but expect some rough edges since it's a fresh release.
+A: The basic stuff works pretty well, but definitely expect some rough edges since it's a fresh release. Probably fine for experimenting! 🧪
 
 ## SuperClaude Contributors
 
@@ -184,6 +235,6 @@ MIT - [See LICENSE file for details](https://opensource.org/licenses/MIT)
 </a>
 ---
 
-*Built by developers, for developers. We hope you find it useful! 🙂*
+*Built by developers who got tired of generic responses. Hope you find it useful! 🙂*
 
 ---

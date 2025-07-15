@@ -102,8 +102,8 @@ def get_installed_components(install_dir: Path) -> Dict[str, str]:
         settings_manager = SettingsManager(install_dir)
         components = {}
         
-        # Check for framework configuration
-        framework_config = settings_manager.get_setting("framework")
+        # Check for framework configuration in metadata
+        framework_config = settings_manager.get_metadata_setting("framework")
         if framework_config and "components" in framework_config:
             for component_name in framework_config["components"]:
                 version = settings_manager.get_component_version(component_name)

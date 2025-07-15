@@ -8,14 +8,14 @@ personas: [architect, analyzer, project-manager]
 mcp-servers: [sequential, context7]
 ---
 
-# /task - Enhanced Task Management
+# /sc:task - Enhanced Task Management
 
 ## Purpose
 Execute complex tasks with intelligent workflow management, cross-session persistence, hierarchical task organization, and advanced orchestration capabilities.
 
 ## Usage
 ```
-/task [action] [target] [--strategy systematic|agile|enterprise] [--persist] [--hierarchy] [--delegate]
+/sc:task [action] [target] [--strategy systematic|agile|enterprise] [--persist] [--hierarchy] [--delegate]
 ```
 
 ## Actions
@@ -124,22 +124,22 @@ Execute complex tasks with intelligent workflow management, cross-session persis
 
 ### Create Project-Level Task Hierarchy
 ```
-/task create "Implement user authentication system" --hierarchy --persist --strategy systematic
+/sc:task create "Implement user authentication system" --hierarchy --persist --strategy systematic
 ```
 
 ### Execute with Multi-Agent Delegation
 ```
-/task execute AUTH-001 --delegate --wave-mode --validate
+/sc:task execute AUTH-001 --delegate --wave-mode --validate
 ```
 
 ### Analytics and Optimization
 ```
-/task analytics --project AUTH --optimization-recommendations
+/sc:task analytics --project AUTH --optimization-recommendations
 ```
 
 ### Cross-Session Task Management
 ```
-/task status --all-sessions --detailed-breakdown
+/sc:task status --all-sessions --detailed-breakdown
 ```
 
 ## Claude Code Integration

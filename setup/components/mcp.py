@@ -3,6 +3,7 @@ MCP component for MCP server integration
 """
 
 import subprocess
+import sys
 import json
 from typing import Dict, List, Tuple, Any
 from pathlib import Path
@@ -75,7 +76,8 @@ class MCPComponent(Component):
                 ["node", "--version"], 
                 capture_output=True, 
                 text=True, 
-                timeout=10
+                timeout=10,
+                shell=(sys.platform == "win32")
             )
             if result.returncode != 0:
                 errors.append("Node.js not found - required for MCP servers")
@@ -99,7 +101,8 @@ class MCPComponent(Component):
                 ["claude", "--version"], 
                 capture_output=True, 
                 text=True, 
-                timeout=10
+                timeout=10,
+                shell=(sys.platform == "win32")
             )
             if result.returncode != 0:
                 errors.append("Claude CLI not found - required for MCP server management")
@@ -115,7 +118,8 @@ class MCPComponent(Component):
                 ["npm", "--version"], 
                 capture_output=True, 
                 text=True, 
-                timeout=10
+                timeout=10,
+                shell=(sys.platform == "win32")
             )
             if result.returncode != 0:
                 errors.append("npm not found - required for MCP server installation")
@@ -131,8 +135,8 @@ class MCPComponent(Component):
         """Get files to install (none for MCP component)"""
         return []
     
-    def get_settings_modifications(self) -> Dict[str, Any]:
-        """Get settings modifications"""
+    def get_metadata_modifications(self) -> Dict[str, Any]:
+        """Get metadata modifications for MCP component"""
         return {
             "components": {
                 "mcp": {
@@ -148,6 +152,11 @@ class MCPComponent(Component):
             }
         }
     
+    def get_settings_modifications(self) -> Dict[str, Any]:
+        """Get settings.json modifications (now only Claude Code compatible settings)"""
+        # Return empty dict as we don't modify Claude Code settings
+        return {}
+    
     def _check_mcp_server_installed(self, server_name: str) -> bool:
         """Check if MCP server is already installed"""
         try:
@@ -155,7 +164,8 @@ class MCPComponent(Component):
                 ["claude", "mcp", "list"], 
                 capture_output=True, 
                 text=True, 
-                timeout=15
+                timeout=15,
+                shell=(sys.platform == "win32")
             )
             
             if result.returncode != 0:
@@ -204,20 +214,21 @@ class MCPComponent(Component):
             
             # Install using Claude CLI
             if config.get("dry_run", False):
-                self.logger.info(f"Would install MCP server: claude mcp add {server_name} {command}")
+                self.logger.info(f"Would install MCP server (user scope): claude mcp add -s user {server_name} {command}")
                 return True
             
-            self.logger.debug(f"Running: claude mcp add {server_name} {command}")
+            self.logger.debug(f"Running: claude mcp add -s user {server_name} {command}")
             
             result = subprocess.run(
-                ["claude", "mcp", "add", server_name, command],
+                ["claude", "mcp", "add", "-s", "user", server_name, command],
                 capture_output=True,
                 text=True,
-                timeout=120  # 2 minutes timeout for installation
+                timeout=120,  # 2 minutes timeout for installation
+                shell=(sys.platform == "win32")
             )
             
             if result.returncode == 0:
-                self.logger.success(f"Successfully installed MCP server: {server_name}")
+                self.logger.success(f"Successfully installed MCP server (user scope): {server_name}")
                 return True
             else:
                 error_msg = result.stderr.strip() if result.stderr else "Unknown error"
@@ -241,13 +252,14 @@ class MCPComponent(Component):
                 self.logger.info(f"MCP server {server_name} not installed")
                 return True
             
-            self.logger.debug(f"Running: claude mcp remove {server_name}")
+            self.logger.debug(f"Running: claude mcp remove {server_name} (auto-detect scope)")
             
             result = subprocess.run(
                 ["claude", "mcp", "remove", server_name],
                 capture_output=True,
                 text=True,
-                timeout=60
+                timeout=60,
+                shell=(sys.platform == "win32")
             )
             
             if result.returncode == 0:
@@ -292,13 +304,27 @@ class MCPComponent(Component):
                         self.logger.error(f"Required MCP server {server_name} failed to install")
                         return False
             
-            # Update settings.json
+            # Update metadata
             try:
-                settings_mods = self.get_settings_modifications()
-                self.settings_manager.update_settings(settings_mods)
-                self.logger.info("Updated settings.json with MCP component registration")
+                # Add component registration to metadata
+                self.settings_manager.add_component_registration("mcp", {
+                    "version": "3.0.0",
+                    "category": "integration",
+                    "servers_count": len(self.mcp_servers)
+                })
+                
+                # Add MCP configuration to metadata
+                metadata = self.settings_manager.load_metadata()
+                metadata["mcp"] = {
+                    "enabled": True,
+                    "servers": list(self.mcp_servers.keys()),
+                    "auto_update": False
+                }
+                self.settings_manager.save_metadata(metadata)
+                
+                self.logger.info("Updated metadata with MCP component registration")
             except Exception as e:
-                self.logger.error(f"Failed to update settings.json: {e}")
+                self.logger.error(f"Failed to update metadata: {e}")
                 return False
             
             # Verify installation
@@ -309,7 +335,8 @@ class MCPComponent(Component):
                         ["claude", "mcp", "list"],
                         capture_output=True,
                         text=True,
-                        timeout=15
+                        timeout=15,
+                        shell=(sys.platform == "win32")
                     )
                     
                     if result.returncode == 0:
@@ -347,13 +374,18 @@ class MCPComponent(Component):
                 if self._uninstall_mcp_server(server_name):
                     uninstalled_count += 1
             
-            # Update settings.json to remove MCP component
+            # Update metadata to remove MCP component
             try:
                 if self.settings_manager.is_component_installed("mcp"):
                     self.settings_manager.remove_component_registration("mcp")
-                    self.logger.info("Removed MCP component from settings.json")
+                    # Also remove MCP configuration from metadata
+                    metadata = self.settings_manager.load_metadata()
+                    if "mcp" in metadata:
+                        del metadata["mcp"]
+                        self.settings_manager.save_metadata(metadata)
+                    self.logger.info("Removed MCP component from metadata")
             except Exception as e:
-                self.logger.warning(f"Could not update settings.json: {e}")
+                self.logger.warning(f"Could not update metadata: {e}")
             
             self.logger.success(f"MCP component uninstalled ({uninstalled_count} servers removed)")
             return True
@@ -401,12 +433,18 @@ class MCPComponent(Component):
                     self.logger.error(f"Error updating MCP server {server_name}: {e}")
                     failed_servers.append(server_name)
             
-            # Update settings
+            # Update metadata
             try:
-                settings_mods = self.get_settings_modifications()
-                self.settings_manager.update_settings(settings_mods)
+                # Update component version in metadata
+                metadata = self.settings_manager.load_metadata()
+                if "components" in metadata and "mcp" in metadata["components"]:
+                    metadata["components"]["mcp"]["version"] = target_version
+                    metadata["components"]["mcp"]["servers_count"] = len(self.mcp_servers)
+                if "mcp" in metadata:
+                    metadata["mcp"]["servers"] = list(self.mcp_servers.keys())
+                self.settings_manager.save_metadata(metadata)
             except Exception as e:
-                self.logger.warning(f"Could not update settings.json: {e}")
+                self.logger.warning(f"Could not update metadata: {e}")
             
             if failed_servers:
                 self.logger.warning(f"Some MCP servers failed to update: {failed_servers}")
@@ -423,9 +461,9 @@ class MCPComponent(Component):
         """Validate MCP component installation"""
         errors = []
         
-        # Check settings.json registration
+        # Check metadata registration
         if not self.settings_manager.is_component_installed("mcp"):
-            errors.append("MCP component not registered in settings.json")
+            errors.append("MCP component not registered in metadata")
             return False, errors
         
         # Check version matches
@@ -440,7 +478,8 @@ class MCPComponent(Component):
                 ["claude", "mcp", "list"],
                 capture_output=True,
                 text=True,
-                timeout=15
+                timeout=15,
+                shell=(sys.platform == "win32")
             )
             
             if result.returncode != 0:

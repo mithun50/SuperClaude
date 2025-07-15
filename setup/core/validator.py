@@ -114,12 +114,13 @@ class Validator:
             return self.validation_cache[cache_key]
         
         try:
-            # Check if node is installed
+            # Check if node is installed - use shell=True on Windows for better PATH resolution
             result = subprocess.run(
                 ['node', '--version'],
                 capture_output=True,
                 text=True,
-                timeout=10
+                timeout=10,
+                shell=(sys.platform == "win32")
             )
             
             if result.returncode != 0:
@@ -181,12 +182,13 @@ class Validator:
             return self.validation_cache[cache_key]
         
         try:
-            # Check if claude is installed
+            # Check if claude is installed - use shell=True on Windows for better PATH resolution
             result = subprocess.run(
                 ['claude', '--version'],
                 capture_output=True,
                 text=True,
-                timeout=10
+                timeout=10,
+                shell=(sys.platform == "win32")
             )
             
             if result.returncode != 0:
@@ -254,7 +256,8 @@ class Validator:
                 cmd_parts,
                 capture_output=True,
                 text=True,
-                timeout=10
+                timeout=10,
+                shell=(sys.platform == "win32")
             )
             
             if result.returncode != 0:
@@ -651,7 +654,8 @@ class Validator:
                         ["which" if sys.platform != "win32" else "where", tool],
                         capture_output=True,
                         text=True,
-                        timeout=5
+                        timeout=5,
+                        shell=(sys.platform == "win32")
                     )
                     if result.returncode == 0:
                         tool_found = True

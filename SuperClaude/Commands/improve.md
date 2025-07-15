@@ -3,14 +3,14 @@ allowed-tools: [Read, Grep, Glob, Edit, MultiEdit, TodoWrite]
 description: "Apply systematic improvements to code quality, performance, and maintainability"
 ---
 
-# /improve - Code Improvement
+# /sc:improve - Code Improvement
 
 ## Purpose
 Apply systematic improvements to code quality, performance, maintainability, and best practices.
 
 ## Usage
 ```
-/improve [target] [--type quality|performance|maintainability|style] [--safe]
+/sc:improve [target] [--type quality|performance|maintainability|style] [--safe]
 ```
 
 ## Arguments

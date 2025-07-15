@@ -1,7 +1,6 @@
 {
   "python": {
-    "min_version": "3.8.0",
-    "max_version": "3.12.99"
+    "min_version": "3.8.0"
   },
   "node": {
     "min_version": "16.0.0",

@@ -24,18 +24,8 @@ class CoreComponent(Component):
         self.file_manager = FileManager()
         self.settings_manager = SettingsManager(self.install_dir)
         
-        # Define framework files to install
-        self.framework_files = [
-            "CLAUDE.md",
-            "COMMANDS.md", 
-            "FLAGS.md",
-            "PRINCIPLES.md",
-            "RULES.md",
-            "MCP.md",
-            "PERSONAS.md",
-            "ORCHESTRATOR.md",
-            "MODES.md"
-        ]
+        # Dynamically discover framework files to install
+        self.framework_files = self._discover_framework_files()
     
     def get_metadata(self) -> Dict[str, str]:
         """Get component metadata"""
@@ -92,8 +82,8 @@ class CoreComponent(Component):
         
         return files
     
-    def get_settings_modifications(self) -> Dict[str, Any]:
-        """Get settings.json modifications"""
+    def get_metadata_modifications(self) -> Dict[str, Any]:
+        """Get metadata modifications for SuperClaude"""
         return {
             "framework": {
                 "version": "3.0.0",
@@ -109,6 +99,11 @@ class CoreComponent(Component):
                 "auto_update": False
             }
         }
+    
+    def get_settings_modifications(self) -> Dict[str, Any]:
+        """Get settings.json modifications (now only Claude Code compatible settings)"""
+        # Return empty dict as we don't modify Claude Code settings
+        return {}
     
     def install(self, config: Dict[str, Any]) -> bool:
         """Install core component"""
@@ -155,13 +150,28 @@ class CoreComponent(Component):
                 self.logger.error(f"Only {success_count}/{len(files_to_install)} files copied successfully")
                 return False
             
-            # Create or update settings.json
+            # Create or update metadata
             try:
-                settings_mods = self.get_settings_modifications()
-                self.settings_manager.update_settings(settings_mods)
-                self.logger.info("Updated settings.json with framework configuration")
+                metadata_mods = self.get_metadata_modifications()
+                # Update metadata directly
+                existing_metadata = self.settings_manager.load_metadata()
+                merged_metadata = self.settings_manager._deep_merge(existing_metadata, metadata_mods)
+                self.settings_manager.save_metadata(merged_metadata)
+                self.logger.info("Updated metadata with framework configuration")
+                
+                # Add component registration to metadata
+                self.settings_manager.add_component_registration("core", {
+                    "version": "3.0.0",
+                    "category": "core",
+                    "files_count": len(self.framework_files)
+                })
+                self.logger.info("Updated metadata with core component registration")
+                
+                # Migrate any existing SuperClaude data from settings.json
+                if self.settings_manager.migrate_superclaude_data():
+                    self.logger.info("Migrated existing SuperClaude data from settings.json")
             except Exception as e:
-                self.logger.error(f"Failed to update settings.json: {e}")
+                self.logger.error(f"Failed to update metadata: {e}")
                 return False
             
             # Create additional directories for other components
@@ -193,13 +203,13 @@ class CoreComponent(Component):
                 else:
                     self.logger.warning(f"Could not remove {filename}")
             
-            # Update settings.json to remove core component
+            # Update metadata to remove core component
             try:
                 if self.settings_manager.is_component_installed("core"):
                     self.settings_manager.remove_component_registration("core")
-                    self.logger.info("Removed core component from settings.json")
+                    self.logger.info("Removed core component from metadata")
             except Exception as e:
-                self.logger.warning(f"Could not update settings.json: {e}")
+                self.logger.warning(f"Could not update metadata: {e}")
             
             self.logger.success(f"Core component uninstalled ({removed_count} files removed)")
             return True
@@ -278,9 +288,9 @@ class CoreComponent(Component):
             elif not file_path.is_file():
                 errors.append(f"Framework file is not a regular file: {filename}")
         
-        # Check settings.json registration
+        # Check metadata registration
         if not self.settings_manager.is_component_installed("core"):
-            errors.append("Core component not registered in settings.json")
+            errors.append("Core component not registered in metadata")
         else:
             # Check version matches
             installed_version = self.settings_manager.get_component_version("core")
@@ -288,21 +298,83 @@ class CoreComponent(Component):
             if installed_version != expected_version:
                 errors.append(f"Version mismatch: installed {installed_version}, expected {expected_version}")
         
-        # Check settings.json structure
+        # Check metadata structure
         try:
-            framework_config = self.settings_manager.get_setting("framework")
+            framework_config = self.settings_manager.get_metadata_setting("framework")
             if not framework_config:
-                errors.append("Missing framework configuration in settings.json")
+                errors.append("Missing framework configuration in metadata")
             else:
                 required_keys = ["version", "name", "description"]
                 for key in required_keys:
                     if key not in framework_config:
-                        errors.append(f"Missing framework.{key} in settings.json")
+                        errors.append(f"Missing framework.{key} in metadata")
         except Exception as e:
-            errors.append(f"Could not validate settings.json: {e}")
+            errors.append(f"Could not validate metadata: {e}")
         
         return len(errors) == 0, errors
     
+    def _discover_framework_files(self) -> List[str]:
+        """
+        Dynamically discover framework .md files in the Core directory
+        
+        Returns:
+            List of framework filenames (e.g., ['CLAUDE.md', 'COMMANDS.md', ...])
+        """
+        return self._discover_files_in_directory(
+            self._get_source_dir(),
+            extension='.md',
+            exclude_patterns=['README.md', 'CHANGELOG.md', 'LICENSE.md']
+        )
+    
+    def _discover_files_in_directory(self, directory: Path, extension: str = '.md', 
+                                   exclude_patterns: List[str] = None) -> List[str]:
+        """
+        Shared utility for discovering files in a directory
+        
+        Args:
+            directory: Directory to scan
+            extension: File extension to look for (default: '.md')
+            exclude_patterns: List of filename patterns to exclude
+            
+        Returns:
+            List of filenames found in the directory
+        """
+        if exclude_patterns is None:
+            exclude_patterns = []
+        
+        try:
+            if not directory.exists():
+                self.logger.warning(f"Source directory not found: {directory}")
+                return []
+            
+            if not directory.is_dir():
+                self.logger.warning(f"Source path is not a directory: {directory}")
+                return []
+            
+            # Discover files with the specified extension
+            files = []
+            for file_path in directory.iterdir():
+                if (file_path.is_file() and 
+                    file_path.suffix.lower() == extension.lower() and
+                    file_path.name not in exclude_patterns):
+                    files.append(file_path.name)
+            
+            # Sort for consistent ordering
+            files.sort()
+            
+            self.logger.debug(f"Discovered {len(files)} {extension} files in {directory}")
+            if files:
+                self.logger.debug(f"Files found: {files}")
+            
+            return files
+            
+        except PermissionError:
+            self.logger.error(f"Permission denied accessing directory: {directory}")
+            return []
+        except Exception as e:
+            self.logger.error(f"Error discovering files in {directory}: {e}")
+            return []
+
     def _get_source_dir(self) -> Path:
         """Get source directory for framework files"""
         # Assume we're in SuperClaude/setup/components/core.py

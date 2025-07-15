@@ -129,9 +129,7 @@ Persona system provides specialized AI behavior patterns optimized for specific 
 
 **Optimized Commands**:
 - `/build --api` - API design and backend build optimization
-- `/deploy` - Reliability and monitoring in deployment
-- `/scan --security` - Backend security and vulnerability assessment
-- `/migrate` - Database and system migrations with data integrity
+- `/git` - Version control and deployment workflows
 
 **Auto-Activation Triggers**:
 - Keywords: "API", "database", "service", "reliability"
@@ -169,7 +167,6 @@ Persona system provides specialized AI behavior patterns optimized for specific 
 - `/analyze` - Systematic, evidence-based analysis
 - `/troubleshoot` - Root cause identification
 - `/explain --detailed` - Comprehensive explanations with evidence
-- `/review` - Systematic quality and pattern analysis
 
 **Auto-Activation Triggers**:
 - Keywords: "analyze", "investigate", "root cause"
@@ -204,10 +201,8 @@ Persona system provides specialized AI behavior patterns optimized for specific 
 - **Avoided**: Magic - UI generation doesn't align with security analysis
 
 **Optimized Commands**:
-- `/scan --security` - Comprehensive vulnerability and compliance scanning
-- `/improve --security` - Security hardening and vulnerability remediation
 - `/analyze --focus security` - Security-focused system analysis
-- `/review` - Security code review and architecture assessment
+- `/improve --security` - Security hardening and vulnerability remediation
 
 **Auto-Activation Triggers**:
 - Keywords: "vulnerability", "threat", "compliance"
@@ -283,7 +278,6 @@ Persona system provides specialized AI behavior patterns optimized for specific 
 - `/improve --quality` - Code quality and maintainability
 - `/cleanup` - Systematic technical debt reduction
 - `/analyze --quality` - Code quality assessment and improvement planning
-- `/review` - Quality-focused code review
 
 **Auto-Activation Triggers**:
 - Keywords: "refactor", "cleanup", "technical debt"
@@ -321,7 +315,6 @@ Persona system provides specialized AI behavior patterns optimized for specific 
 - `/improve --perf` - Performance optimization with metrics validation
 - `/analyze --focus performance` - Performance bottleneck identification
 - `/test --benchmark` - Performance testing and validation
-- `/review` - Performance-focused code review
 
 **Auto-Activation Triggers**:
 - Keywords: "optimize", "performance", "bottleneck"
@@ -357,9 +350,8 @@ Persona system provides specialized AI behavior patterns optimized for specific 
 
 **Optimized Commands**:
 - `/test` - Comprehensive testing strategy and implementation
-- `/scan --quality` - Quality assessment and improvement
 - `/troubleshoot` - Quality issue investigation and resolution
-- `/review` - Quality-focused code and system review
+- `/analyze --focus quality` - Quality assessment and improvement
 
 **Auto-Activation Triggers**:
 - Keywords: "test", "quality", "validation"
@@ -394,10 +386,8 @@ Persona system provides specialized AI behavior patterns optimized for specific 
 - **Avoided**: Magic - UI generation doesn't align with infrastructure focus
 
 **Optimized Commands**:
-- `/deploy` - Comprehensive deployment automation and validation
-- `/dev-setup` - Development environment automation
-- `/scan --security` - Infrastructure security and compliance
-- `/migrate` - Infrastructure and system migration management
+- `/git` - Version control workflows and deployment coordination
+- `/analyze --focus infrastructure` - Infrastructure analysis and optimization
 
 **Auto-Activation Triggers**:
 - Keywords: "deploy", "infrastructure", "automation"

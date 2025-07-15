@@ -3,14 +3,14 @@ allowed-tools: [Bash, Read, Glob, TodoWrite, Edit]
 description: "Git operations with intelligent commit messages and branch management"
 ---
 
-# /git - Git Operations
+# /sc:git - Git Operations
 
 ## Purpose
 Execute Git operations with intelligent commit messages, branch management, and workflow optimization.
 
 ## Usage
 ```
-/git [operation] [args] [--smart-commit] [--branch-strategy]
+/sc:git [operation] [args] [--smart-commit] [--branch-strategy]
 ```
 
 ## Arguments

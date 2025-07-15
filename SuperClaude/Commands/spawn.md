@@ -3,14 +3,14 @@ allowed-tools: [Read, Grep, Glob, Bash, TodoWrite, Edit, MultiEdit, Write]
 description: "Break complex tasks into coordinated subtasks with efficient execution"
 ---
 
-# /spawn - Task Orchestration
+# /sc:spawn - Task Orchestration
 
 ## Purpose
 Decompose complex requests into manageable subtasks and coordinate their execution.
 
 ## Usage
 ```
-/spawn [task] [--sequential|--parallel] [--validate]
+/sc:spawn [task] [--sequential|--parallel] [--validate]
 ```
 
 ## Arguments
