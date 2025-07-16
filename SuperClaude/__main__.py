@@ -17,10 +17,22 @@ import subprocess
 import difflib
 from pathlib import Path
 from typing import Dict, Callable
+import os
 
-# Add the 'setup' directory to the Python import path
-from pkg_resources import resource_filename
-setup_dir = resource_filename('setup', '')
+# Add the 'setup' directory to the Python import path (with deprecation-safe logic)
+import sys
+
+try:
+    # Python 3.9+ preferred modern way
+    from importlib.resources import files, as_file
+    with as_file(files("setup")) as resource:
+        setup_dir = str(resource)
+except (ImportError, ModuleNotFoundError, AttributeError):
+    # Fallback for Python < 3.9
+    from pkg_resources import resource_filename
+    setup_dir = resource_filename('setup', '')
+
+# Add to sys.path
 sys.path.insert(0, str(setup_dir))
 
 # Try to import utilities from the setup package
