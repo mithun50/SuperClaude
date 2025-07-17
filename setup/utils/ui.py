@@ -6,7 +6,7 @@ Cross-platform console UI with colors and progress indication
 import sys
 import time
 import shutil
-from typing import List, Optional, Any, Dict
+from typing import List, Optional, Any, Dict, Union
 from enum import Enum
 
 # Try to import colorama for cross-platform color support
@@ -167,7 +167,7 @@ class Menu:
         self.multi_select = multi_select
         self.selected = set() if multi_select else None
         
-    def display(self) -> int | List[int]:
+    def display(self) -> Union[int, List[int]]:
         """
         Display menu and get user selection
         

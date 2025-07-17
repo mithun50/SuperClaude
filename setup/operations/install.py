@@ -39,11 +39,11 @@ def register_parser(subparsers, global_parser=None) -> argparse.ArgumentParser:
         description="Install SuperClaude Framework with various options and profiles",
         epilog="""
 Examples:
-  SuperClaude.py install                          # Interactive installation
-  SuperClaude.py install --quick --dry-run        # Quick installation (dry-run)
-  SuperClaude.py install --profile developer      # Developer profile  
-  SuperClaude.py install --components core mcp    # Specific components
-  SuperClaude.py install --verbose --force        # Verbose with force mode
+  SuperClaude install                          # Interactive installation
+  SuperClaude install --quick --dry-run        # Quick installation (dry-run)
+  SuperClaude install --profile developer      # Developer profile  
+  SuperClaude install --components core mcp    # Specific components
+  SuperClaude install --verbose --force        # Verbose with force mode
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
         parents=parents
@@ -121,7 +121,7 @@ def validate_system_requirements(validator: Validator, component_names: List[str
             
             # Provide additional guidance
             print(f"\n{Colors.CYAN}💡 Installation Help:{Colors.RESET}")
-            print("  Run 'SuperClaude.py install --diagnose' for detailed system diagnostics")
+            print("  Run 'SuperClaude install --diagnose' for detailed system diagnostics")
             print("  and step-by-step installation instructions.")
             
             return False
@@ -321,12 +321,12 @@ def run_system_diagnostics(validator: Validator) -> None:
     
     print(f"\n{Colors.BLUE}Next steps:{Colors.RESET}")
     if all_passed:
-        print("  1. Run 'SuperClaude.py install' to proceed with installation")
+        print("  1. Run 'SuperClaude install' to proceed with installation")
         print("  2. Choose your preferred installation mode (quick, minimal, or custom)")
     else:
         print("  1. Install missing dependencies using the commands above")
         print("  2. Restart your terminal after installing tools")
-        print("  3. Run 'SuperClaude.py install --diagnose' again to verify")
+        print("  3. Run 'SuperClaude install --diagnose' again to verify")
 
 
 def perform_installation(components: List[str], args: argparse.Namespace) -> bool:

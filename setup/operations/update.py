@@ -40,10 +40,10 @@ def register_parser(subparsers, global_parser=None) -> argparse.ArgumentParser:
         description="Update SuperClaude Framework components to latest versions",
         epilog="""
 Examples:
-  SuperClaude.py update                       # Interactive update
-  SuperClaude.py update --check --verbose     # Check for updates (verbose)
-  SuperClaude.py update --components core mcp # Update specific components
-  SuperClaude.py update --backup --force      # Create backup before update (forced)
+  SuperClaude update                       # Interactive update
+  SuperClaude update --check --verbose     # Check for updates (verbose)
+  SuperClaude update --components core mcp # Update specific components
+  SuperClaude update --backup --force      # Create backup before update (forced)
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
         parents=parents
@@ -354,7 +354,7 @@ def run(args: argparse.Namespace) -> int:
         # Check if SuperClaude is installed
         if not check_installation_exists(args.install_dir):
             logger.error(f"SuperClaude installation not found in {args.install_dir}")
-            logger.info("Use 'SuperClaude.py install' to install SuperClaude first")
+            logger.info("Use 'SuperClaude install' to install SuperClaude first")
             return 1
         
         # Create component registry

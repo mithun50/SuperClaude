@@ -38,10 +38,10 @@ def register_parser(subparsers, global_parser=None) -> argparse.ArgumentParser:
         description="Uninstall SuperClaude Framework components",
         epilog="""
 Examples:
-  SuperClaude.py uninstall                    # Interactive uninstall
-  SuperClaude.py uninstall --components core  # Remove specific components
-  SuperClaude.py uninstall --complete --force # Complete removal (forced)
-  SuperClaude.py uninstall --keep-backups     # Keep backup files
+  SuperClaude uninstall                    # Interactive uninstall
+  SuperClaude uninstall --components core  # Remove specific components
+  SuperClaude uninstall --complete --force # Complete removal (forced)
+  SuperClaude uninstall --keep-backups     # Keep backup files
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
         parents=parents
@@ -484,7 +484,7 @@ def run(args: argparse.Namespace) -> int:
                     print(f"\n{Colors.CYAN}Uninstall complete:{Colors.RESET}")
                     print(f"SuperClaude has been removed from {args.install_dir}")
                     if not args.complete:
-                        print(f"You can reinstall anytime using 'SuperClaude.py install'")
+                        print(f"You can reinstall anytime using 'SuperClaude install'")
                     
             return 0
         else:

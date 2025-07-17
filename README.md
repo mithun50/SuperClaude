@@ -1,5 +1,6 @@
 # SuperClaude v3 🚀
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://img.shields.io/pypi/v/SuperClaude.svg)](https://pypi.org/project/SuperClaude/)
 [![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](https://github.com/NomenAK/SuperClaude)
 [![PyPI version](https://img.shields.io/pypi/v/SuperClaude.svg)](https://pypi.org/project/SuperClaude/)
 [![GitHub issues](https://img.shields.io/github/issues/NomenAK/SuperClaude)](https://github.com/NomenAK/SuperClaude/issues)
@@ -90,19 +91,74 @@ This is because v3 has a different structure and the old files can cause conflic
 
 ## Installation 📦
 
-### Quick Start
+SuperClaude installation is a **two-step process**:
+1. First install the Python package
+2. Then run the installer to set up Claude Code integration
+
+### Step 1: Install the Package
+
+**Option A: From PyPI (Recommended)**
 ```bash
-# Clone the repo
-git clone https://github.com/NomenAK/SuperClaude.git
-cd SuperClaude
-
-# Install with our unified CLI
-python3 SuperClaude.py install --quick
-
-# That's it! 🎉
+pip install SuperClaude
 ```
 
-**Missing Python?**
+**Option B: From Source**
+```bash
+git clone https://github.com/NomenAK/SuperClaude.git
+cd SuperClaude
+pip install .
+```
+### 🔧 UV / UVX Setup Guide
+
+SuperClaude v3 also supports installation via [`uv`](https://github.com/astral-sh/uv) (a faster, modern Python package manager) or `uvx` for cross-platform usage.
+
+### 🌀 Install with `uv`
+
+Make sure `uv` is installed:
+
+```bash
+curl -Ls https://astral.sh/uv/install.sh | sh
+```
+
+> Or follow instructions from: [https://github.com/astral-sh/uv](https://github.com/astral-sh/uv)
+
+Once `uv` is available, you can install SuperClaude like this:
+
+```bash
+uv venv
+source .venv/bin/activate
+uv pip install SuperClaude
+```
+
+### ⚡ Install with `uvx` (Cross-platform CLI)
+
+If you’re using `uvx`, just run:
+
+```bash
+uvx pip install SuperClaude
+```
+
+### ✅ Finish Installation
+
+After installing, continue with the usual installer step:
+
+```bash
+python3 -m SuperClaude install
+```
+
+Or using bash-style CLI:
+
+```bash
+SuperClaude install
+```
+
+### 🧠 Note:
+
+* `uv` provides better caching and performance.
+* Compatible with Python 3.8+ and works smoothly with SuperClaude.
+
+---
+**Missing Python?** Install Python 3.7+ first:
 ```bash
 # Linux (Ubuntu/Debian)
 sudo apt update && sudo apt install python3 python3-pip
@@ -114,22 +170,65 @@ brew install python3
 # Download from https://python.org/downloads/
 ```
 
-### Other Installation Options
+### Step 2: Run the Installer
+
+After installing the package, run the SuperClaude installer to configure Claude Code (You can use any of the method):
+### ⚠️ Important Note 
+**After installing the SuperClaude.**
+**You can use `SuperClaude commands`
+, `python3 -m SuperClaude commands` or also `python3 SuperClaude commands`**
 ```bash
+# Quick setup (recommended for most users)
+python3 SuperClaude install
+
+# Interactive selection (choose components)
+python3 SuperClaude install --interactive
+
 # Minimal install (just core framework)
-python3 SuperClaude.py install --minimal
+python3 SuperClaude install --minimal
 
-# Developer setup (everything)  
-python3 SuperClaude.py install --profile developer
+# Developer setup (everything included)
+python3 SuperClaude install --profile developer
 
-# Interactive selection
-python3 SuperClaude.py install
+# See all available options
+python3 SuperClaude install --help
+```
+### Or Python Modular Usage
+```bash
+# Quick setup (recommended for most users)
+python3 -m SuperClaude install
 
-# See what's available
-python3 SuperClaude.py install --list-components
+# Interactive selection (choose components)
+python3 -m SuperClaude install --interactive
+
+# Minimal install (just core framework)
+python3 -m SuperClaude install --minimal
+
+# Developer setup (everything included)
+python3 -m SuperClaude install --profile developer
+
+# See all available options
+python3 -m SuperClaude install --help
+```
+### Simple bash Command Usage 
+```bash
+# Quick setup (recommended for most users)
+SuperClaude install
+
+# Interactive selection (choose components)
+SuperClaude install --interactive
+
+# Minimal install (just core framework)
+SuperClaude install --minimal
+
+# Developer setup (everything included)
+SuperClaude install --profile developer
+
+# See all available options
+SuperClaude install --help
 ```
 
-The installer handles everything: framework files, MCP servers, and Claude Code configuration.
+**That's it! 🎉** The installer handles everything: framework files, MCP servers, and Claude Code configuration.
 
 ## How It Works 🔄
 
@@ -165,11 +264,11 @@ Most users probably won't need to change anything - it usually works okay out of
 
 Want to learn more? Check out our guides:
 
-- 📚 [**User Guide**](Docs/superclaude-user-guide.md) - Complete overview and getting started
-- 🛠️ [**Commands Guide**](Docs/commands-guide.md) - All 16 slash commands explained  
-- 🏳️ [**Flags Guide**](Docs/flags-guide.md) - Command flags and options
-- 🎭 [**Personas Guide**](Docs/personas-guide.md) - Understanding the persona system
-- 📦 [**Installation Guide**](Docs/installation-guide.md) - Detailed installation instructions
+- 📚 [**User Guide**](https://github.com/NomenAK/SuperClaude/blob/master/Docs/superclaude-user-guide.md) - Complete overview and getting started
+- 🛠️ [**Commands Guide**](https://github.com/NomenAK/SuperClaude/blob/master/Docs/commands-guide.md) - All 16 slash commands explained  
+- 🏳️ [**Flags Guide**](https://github.com/NomenAK/SuperClaude/blob/master/Docs/flags-guide.md) - Command flags and options
+- 🎭 [**Personas Guide**](https://github.com/NomenAK/SuperClaude/blob/master/Docs/personas-guide.md) - Understanding the persona system
+- 📦 [**Installation Guide**](https://github.com/NomenAK/SuperClaude/blob/master/Docs/installation-guide.md) - Detailed installation instructions
 
 These guides have more details than this README and are kept up to date.
 
@@ -187,7 +286,7 @@ The codebase is pretty straightforward Python + documentation files.
 
 ```
 SuperClaude/
-├── SuperClaude.py         # Main installer CLI
+├── setup.py               # pypi setup file
 ├── SuperClaude/           # Framework files  
 │   ├── Core/              # Behavior documentation (COMMANDS.md, FLAGS.md, etc.)
 │   ├── Commands/          # 16 slash command definitions

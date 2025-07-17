@@ -6,10 +6,66 @@
 
 **TL;DR for the impatient:**
 ```bash
-git clone <repository-url> && cd SuperClaude
-python3 SuperClaude.py install --quick
+pip install SuperClaude
+SuperClaude install --quick
 # That's it! 🎉
 ```
+---
+## 🔧 UV / UVX Setup Guide
+
+SuperClaude v3 also supports installation via [`uv`](https://github.com/astral-sh/uv) (a faster, modern Python package manager) or `uvx` for cross-platform usage.
+
+### 🌀 Install with `uv`
+
+Make sure `uv` is installed:
+
+```bash
+curl -Ls https://astral.sh/uv/install.sh | sh
+```
+
+> Or follow instructions from: [https://github.com/astral-sh/uv](https://github.com/astral-sh/uv)
+
+Once `uv` is available, you can install SuperClaude like this:
+
+```bash
+uv venv
+source .venv/bin/activate
+uv pip install SuperClaude
+```
+
+### ⚡ Install with `uvx` (Cross-platform CLI)
+
+If you’re using `uvx`, just run:
+
+```bash
+uvx pip install SuperClaude
+```
+
+### ✅ Finish Installation
+
+After installing, continue with the usual installer step:
+
+```bash
+python3 -m SuperClaude install
+```
+
+Or using bash-style CLI:
+
+```bash
+SuperClaude install
+```
+
+### 🧠 Note:
+
+* `uv` provides better caching and performance.
+* Compatible with Python 3.8+ and works smoothly with SuperClaude.
+
+---
+
+### ⚠️ Important Note 
+**After installing the SuperClaude.**
+**You can use `SuperClaude commands`
+, `python3 -m SuperClaude commands` or also `python3 SuperClaude commands`**
 
 **What just happened?** SuperClaude tried to set up everything you need. Usually no complex configuration, dependency hunting, or setup headaches! 🎉
 
@@ -51,17 +107,31 @@ If any of these fail, see the [Prerequisites Setup](#prerequisites-setup-🛠️
 ## Quick Start 🚀
 
 **🏆 The "Just Get It Working" Approach (Recommended for 90% of Users)**
+**Option A: From PyPI (Recommended)**
+```bash
+pip install SuperClaude
 
+# Install with recommended settings  
+SuperClaude install --quick
+
+# That's it! 🎉
+```
+**Option B: From Source**
 ```bash
 # Clone the repo
 git clone <repository-url>
 cd SuperClaude
+pip install .
 
 # Install with recommended settings  
-python3 SuperClaude.py install --quick
+SuperClaude install --quick
 
 # That's it! 🎉
 ```
+**⚠️ Important Note**
+**After installing the SuperClaude.**
+**You can use `SuperClaude commands`
+, `python3 -m SuperClaude commands` or also `python3 SuperClaude commands`**
 
 **What you just got:**
 - ✅ All 16 smart commands that auto-activate experts
@@ -73,7 +143,7 @@ python3 SuperClaude.py install --quick
 
 **Nervous about what it will do?** See first with:
 ```bash
-python3 SuperClaude.py install --quick --dry-run
+SuperClaude install --quick --dry-run
 ```
 
 ## Installation Options 🎯
@@ -82,7 +152,7 @@ We have three installation profiles to choose from:
 
 ### 🎯 Minimal Installation
 ```bash
-python3 SuperClaude.py install --minimal
+SuperClaude install --minimal
 ```
 - **What**: Just the core framework files
 - **Time**: ~1 minute
@@ -92,7 +162,7 @@ python3 SuperClaude.py install --minimal
 
 ### 🚀 Quick Installation (Recommended)
 ```bash
-python3 SuperClaude.py install --quick
+SuperClaude install --quick
 ```
 - **What**: Core framework + 16 slash commands
 - **Time**: ~2 minutes
@@ -102,7 +172,7 @@ python3 SuperClaude.py install --quick
 
 ### 🔧 Developer Installation  
 ```bash
-python3 SuperClaude.py install --profile developer
+SuperClaude install --profile developer
 ```
 - **What**: Everything including MCP server integration
 - **Time**: ~5 minutes
@@ -112,7 +182,7 @@ python3 SuperClaude.py install --profile developer
 
 ### 🎛️ Interactive Installation
 ```bash
-python3 SuperClaude.py install
+SuperClaude install
 ```
 - Lets you pick and choose components
 - Shows detailed descriptions of what each component does
@@ -132,6 +202,8 @@ brew install python3
 
 # Windows
 # Download from https://python.org/downloads/
+#or open command prompt or powershell
+winget install python
 ```
 
 **Missing Claude CLI?**
@@ -148,23 +220,32 @@ brew install node
 
 # Windows  
 # Download from https://nodejs.org/
+#or open command prompt or powershell
+winget install nodejs
 ```
 
 ### Getting SuperClaude 📥
 
-**Option 1: Download the latest release**
+**Option 1: From PyPI (Recommended)**
+```bash
+pip install SuperClaude
+```
+
+**Option 2: Download the latest release**
 ```bash
 # Download and extract the latest release
 # (Replace URL with actual release URL)
 curl -L <release-url> -o superclaude-v3.zip
 unzip superclaude-v3.zip
 cd superclaude-v3
+pip install .
 ```
 
-**Option 2: Clone from Git**
+**Option 3: Clone from Git**
 ```bash
 git clone <repository-url>
 cd SuperClaude
+pip install .
 ```
 
 ### Running the Installer 🎬
@@ -173,19 +254,19 @@ The installer is pretty smart and will guide you through the process:
 
 ```bash
 # See all available options
-python3 SuperClaude.py install --help
+SuperClaude install --help
 
 # Quick installation (recommended)
-python3 SuperClaude.py install --quick
+SuperClaude install --quick
 
 # Want to see what would happen first?
-python3 SuperClaude.py install --quick --dry-run
+SuperClaude install --quick --dry-run
 
 # Install everything
-python3 SuperClaude.py install --profile developer
+SuperClaude install --profile developer
 
 # Quiet installation (minimal output)
-python3 SuperClaude.py install --quick --quiet
+SuperClaude install --quick --quiet
 
 # Force installation (skip confirmations)
 python3 SuperClaude.py install --quick --force
@@ -273,16 +354,16 @@ Keep SuperClaude up to date:
 
 ```bash
 # Check for updates
-python3 SuperClaude.py update
+SuperClaude update
 
 # Force update (overwrite local changes)
-python3 SuperClaude.py update --force
+SuperClaude update --force
 
 # Update specific components only
-python3 SuperClaude.py update --components core,commands
+SuperClaude update --components core,commands
 
 # See what would be updated
-python3 SuperClaude.py update --dry-run
+SuperClaude update --dry-run
 ```
 
 **When to update:**
@@ -296,16 +377,16 @@ Create backups before major changes:
 
 ```bash
 # Create a backup
-python3 SuperClaude.py backup --create
+SuperClaude backup --create
 
 # List existing backups  
-python3 SuperClaude.py backup --list
+SuperClaude backup --list
 
 # Restore from backup
-python3 SuperClaude.py backup --restore
+SuperClaude backup --restore
 
 # Create backup with custom name
-python3 SuperClaude.py backup --create --name "before-update"
+SuperClaude backup --create --name "before-update"
 ```
 
 **When to backup:**
@@ -320,13 +401,13 @@ If you need to remove SuperClaude:
 
 ```bash
 # Remove SuperClaude (keeps backups)
-python3 SuperClaude.py uninstall
+SuperClaude uninstall
 
 # Complete removal (removes everything)
-python3 SuperClaude.py uninstall --complete
+SuperClaude uninstall --complete
 
 # See what would be removed
-python3 SuperClaude.py uninstall --dry-run
+SuperClaude uninstall --dry-run
 ```
 
 **What gets removed:**
@@ -374,10 +455,10 @@ ls -la ~/.claude/
 **"Installation fails partway through"**
 ```bash
 # Try with verbose output to see what's happening
-python3 SuperClaude.py install --quick --verbose
+SuperClaude install --quick --verbose
 
 # Or try a dry run first
-python3 SuperClaude.py install --quick --dry-run
+SuperClaude install --quick --dry-run
 ```
 
 ### Platform-Specific Issues 🖥️
@@ -400,7 +481,7 @@ python3 SuperClaude.py install --quick --dry-run
 ### Still Having Issues? 🤔
 
 **Check our troubleshooting resources:**
-- GitHub Issues: https://github.com/your-repo/SuperClaude/issues
+- GitHub Issues: https://github.com/NomenAK/SuperClaude/issues
 - Look for existing issues similar to yours
 - Create a new issue if you can't find a solution
 
@@ -423,24 +504,24 @@ python3 SuperClaude.py install --quick --dry-run
 
 ```bash
 # Install to custom location
-python3 SuperClaude.py install --quick --install-dir /custom/path
+SuperClaude install --quick --install-dir /custom/path
 
 # Use environment variable
 export SUPERCLAUDE_DIR=/custom/path
-python3 SuperClaude.py install --quick
+SuperClaude install --quick
 ```
 
 ### Component Selection
 
 ```bash
 # See available components
-python3 SuperClaude.py install --list-components
+SuperClaude install --list-components
 
 # Install specific components only
-python3 SuperClaude.py install --components core,commands
+SuperClaude install --components core,commands
 
 # Skip certain components
-python3 SuperClaude.py install --quick --skip mcp
+SuperClaude install --quick --skip mcp
 ```
 
 ### Development Setup
@@ -449,13 +530,13 @@ If you're planning to contribute or modify SuperClaude:
 
 ```bash
 # Developer installation with all components
-python3 SuperClaude.py install --profile developer
+SuperClaude install --profile developer
 
 # Install in development mode (symlinks instead of copies)
-python3 SuperClaude.py install --profile developer --dev-mode
+SuperClaude install --profile developer --dev-mode
 
 # Install with git hooks for development
-python3 SuperClaude.py install --profile developer --dev-hooks
+SuperClaude install --profile developer --dev-hooks
 ```
 
 ## What's Next? 🚀
@@ -481,6 +562,10 @@ python3 SuperClaude.py install --profile developer --dev-hooks
 - **Works alongside existing tools** - doesn't interfere with your setup
 - **Easy to uninstall** if you change your mind
 - **Community supported** - we actually read and respond to issues
+- ### ⚠️ Important Note 
+**After installing the SuperClaude.**
+**You can use `SuperClaude commands`
+, `python3 -m SuperClaude commands` or also `python3 SuperClaude commands`**
 
 Thanks for trying SuperClaude! We hope it makes your development workflow a bit smoother. 🙂
 

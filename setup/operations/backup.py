@@ -40,12 +40,12 @@ def register_parser(subparsers, global_parser=None) -> argparse.ArgumentParser:
         description="Create, list, restore, and manage SuperClaude installation backups",
         epilog="""
 Examples:
-  SuperClaude.py backup --create               # Create new backup
-  SuperClaude.py backup --list --verbose       # List available backups (verbose)
-  SuperClaude.py backup --restore              # Interactive restore
-  SuperClaude.py backup --restore backup.tar.gz  # Restore specific backup
-  SuperClaude.py backup --info backup.tar.gz   # Show backup information
-  SuperClaude.py backup --cleanup --force      # Clean up old backups (forced)
+  SuperClaude backup --create               # Create new backup
+  SuperClaude backup --list --verbose       # List available backups (verbose)
+  SuperClaude backup --restore              # Interactive restore
+  SuperClaude backup --restore backup.tar.gz  # Restore specific backup
+  SuperClaude backup --info backup.tar.gz   # Show backup information
+  SuperClaude backup --cleanup --force      # Clean up old backups (forced)
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
         parents=parents

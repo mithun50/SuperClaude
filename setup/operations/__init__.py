@@ -2,7 +2,7 @@
 SuperClaude Operations Module
 
 This module contains all SuperClaude management operations that can be
-executed through the unified CLI hub (SuperClaude.py).
+executed through the unified CLI hub (SuperClaude).
 
 Each operation module should implement:
 - register_parser(subparsers): Register CLI arguments for the operation
