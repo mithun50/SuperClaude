@@ -31,7 +31,8 @@ classifiers = [
 keywords = ["claude", "ai", "automation", "framework", "mcp", "agents", "development", "code-generation", "assistant"]
 dependencies = [
     "setuptools>=45.0.0",
-    "importlib-metadata>=1.0.0; python_version<'3.8'"
+    "importlib-metadata>=1.0.0; python_version<'3.8'",
+    "colorama>=0.4.4; sys_platform=='win32'"
 ]
 
 [project.urls]

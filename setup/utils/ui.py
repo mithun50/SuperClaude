@@ -14,26 +14,43 @@ from enum import Enum
 try:
     import colorama
     from colorama import Fore, Back, Style
+    # Initialize colorama on all platforms, as it handles autoreset and platform differences.
     colorama.init(autoreset=True)
     COLORAMA_AVAILABLE = True
 except ImportError:
     COLORAMA_AVAILABLE = False
-    # Fallback color codes for Unix-like systems
-    class MockFore:
-        RED = '\033[91m' if sys.platform != 'win32' else ''
-        GREEN = '\033[92m' if sys.platform != 'win32' else ''
-        YELLOW = '\033[93m' if sys.platform != 'win32' else ''
-        BLUE = '\033[94m' if sys.platform != 'win32' else ''
-        MAGENTA = '\033[95m' if sys.platform != 'win32' else ''
-        CYAN = '\033[96m' if sys.platform != 'win32' else ''
-        WHITE = '\033[97m' if sys.platform != 'win32' else ''
     
-    class MockStyle:
-        RESET_ALL = '\033[0m' if sys.platform != 'win32' else ''
-        BRIGHT = '\033[1m' if sys.platform != 'win32' else ''
+    # Fallback for systems without colorama.
+    # On Windows, this means no colors. On other systems, use ANSI escape codes.
+    class MockColor:
+        def __init__(self, enabled: bool):
+            self.enabled = enabled
+            self.colors = {
+                'RED': '\033[91m',
+                'GREEN': '\033[92m',
+                'YELLOW': '\033[93m',
+                'BLUE': '\033[94m',
+                'MAGENTA': '\033[95m',
+                'CYAN': '\033[96m',
+                'WHITE': '\033[97m',
+                'RESET': '\033[0m',
+                'RESET_ALL': '\033[0m',
+                'BRIGHT': '\033[1m',
+                'DIM': '\033[2m',
+                'NORMAL': '\033[22m',
+            }
+
+        def __getattr__(self, name: str) -> str:
+            if self.enabled:
+                return self.colors.get(name.upper(), '')
+            return ''
+
+    # Enable ANSI codes on non-Windows platforms if colorama is not available
+    _ansi_enabled = sys.platform != 'win32'
     
-    Fore = MockFore()
-    Style = MockStyle()
+    Fore = MockColor(_ansi_enabled)
+    Back = MockColor(_ansi_enabled)
+    Style = MockColor(_ansi_enabled)
 
 
 class Colors:
