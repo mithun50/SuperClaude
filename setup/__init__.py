@@ -8,9 +8,9 @@ from pathlib import Path
 try:
     __version__ = (Path(__file__).parent.parent / "VERSION").read_text().strip()
 except Exception:
-    __version__ = "4.0.9"  # Fallback
+    __version__ = "4.1.0"  # Fallback
 
-__author__ = "NomenAK"
+__author__ = "NomenAK, Mithun Gowda B"
 
 # Core paths
 SETUP_DIR = Path(__file__).parent

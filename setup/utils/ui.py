@@ -271,11 +271,52 @@ def display_header(title: str, subtitle: str = '') -> None:
         title: Main title
         subtitle: Optional subtitle
     """
+    from SuperClaude import __author__, __email__
+
     print(f"\n{Colors.CYAN}{Colors.BRIGHT}{'='*60}{Colors.RESET}")
     print(f"{Colors.CYAN}{Colors.BRIGHT}{title:^60}{Colors.RESET}")
     if subtitle:
         print(f"{Colors.WHITE}{subtitle:^60}{Colors.RESET}")
+
+    # Display authors
+    authors = [a.strip() for a in __author__.split(',')]
+    emails = [e.strip() for e in __email__.split(',')]
+
+    author_lines = []
+    for i in range(len(authors)):
+        name = authors[i]
+        email = emails[i] if i < len(emails) else ''
+        author_lines.append(f"{name} <{email}>")
+
+    authors_str = " | ".join(author_lines)
+    print(f"{Colors.BLUE}{authors_str:^60}{Colors.RESET}")
+
     print(f"{Colors.CYAN}{Colors.BRIGHT}{'='*60}{Colors.RESET}\n")
+
+
+def display_authors() -> None:
+    """Display author information"""
+    from SuperClaude import __author__, __email__, __github__
+
+    print(f"\n{Colors.CYAN}{Colors.BRIGHT}{'='*60}{Colors.RESET}")
+    print(f"{Colors.CYAN}{Colors.BRIGHT}{'SuperClaude Authors':^60}{Colors.RESET}")
+    print(f"{Colors.CYAN}{Colors.BRIGHT}{'='*60}{Colors.RESET}\n")
+
+    authors = [a.strip() for a in __author__.split(',')]
+    emails = [e.strip() for e in __email__.split(',')]
+    github_users = [g.strip() for g in __github__.split(',')]
+
+    for i in range(len(authors)):
+        name = authors[i]
+        email = emails[i] if i < len(emails) else 'N/A'
+        github = github_users[i] if i < len(github_users) else 'N/A'
+
+        print(f"  {Colors.BRIGHT}{name}{Colors.RESET}")
+        print(f"    Email: {Colors.YELLOW}{email}{Colors.RESET}")
+        print(f"    GitHub: {Colors.YELLOW}https://github.com/{github}{Colors.RESET}")
+        print()
+
+    print(f"{Colors.CYAN}{'='*60}{Colors.RESET}\n")
 
 
 def display_info(message: str) -> None:

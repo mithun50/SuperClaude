@@ -172,16 +172,13 @@ class Installer:
                         # Log warning but continue backup process
                         self.logger.warning(f"Could not backup {item.name}: {e}")
 
-            # Create archive only if there are files to backup
-            if any(temp_backup.iterdir()):
-                # shutil.make_archive adds .tar.gz automatically, so use base name without extensions
-                base_path = backup_dir / backup_name
-                shutil.make_archive(str(base_path), 'gztar', temp_backup)
-            else:
-                # Create empty backup file to indicate backup was attempted
-                backup_path.touch()
+            # Always create an archive, even if empty, to ensure it's a valid tarball
+            base_path = backup_dir / backup_name
+            shutil.make_archive(str(base_path), 'gztar', temp_backup)
+
+            if not any(temp_backup.iterdir()):
                 self.logger.warning(
-                    f"No files to backup, created empty backup marker: {backup_path.name}"
+                    f"No files to backup, created empty backup archive: {backup_path.name}"
                 )
 
         self.backup_path = backup_path
@@ -204,8 +201,10 @@ class Installer:
 
         component = self.components[component_name]
 
-        # Skip if already installed and not in update mode
-        if component_name in self.installed_components and not config.get("update_mode"):
+        # Skip if already installed and not in update mode, unless component is reinstallable
+        if not component.is_reinstallable() and component_name in self.installed_components and not config.get("update_mode"):
+            self.skipped_components.add(component_name)
+            self.logger.info(f"Skipping already installed component: {component_name}")
             return True
 
         # Check prerequisites
@@ -295,7 +294,11 @@ class Installer:
         self.logger.info("Running post-installation validation...")
 
         all_valid = True
-        for name in self.installed_components:
+        for name in self.updated_components:
+            if name not in self.components:
+                self.logger.warning(f"Cannot validate component '{name}' as it was not part of this installation session.")
+                continue
+
             component = self.components[name]
             success, errors = component.validate_installation()
 

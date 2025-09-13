@@ -18,6 +18,7 @@ class MCPComponent(Component):
     def __init__(self, install_dir: Optional[Path] = None):
         """Initialize MCP component"""
         super().__init__(install_dir)
+        self.installed_servers_in_session: List[str] = []
         
         # Define MCP servers to install
         self.mcp_servers = {
@@ -73,6 +74,10 @@ class MCPComponent(Component):
             "description": "MCP server integration (Context7, Sequential, Magic, Playwright)",
             "category": "integration"
         }
+
+    def is_reinstallable(self) -> bool:
+        """This component manages sub-components (servers) and should be re-run."""
+        return True
     
     def validate_prerequisites(self, installSubPath: Optional[Path] = None) -> Tuple[bool, List[str]]:
         """Check prerequisites"""
@@ -150,12 +155,12 @@ class MCPComponent(Component):
                 "mcp": {
                     "version": __version__,
                     "installed": True,
-                    "servers_count": len(self.mcp_servers)
+                    "servers_count": len(self.installed_servers_in_session)
                 }
             },
             "mcp": {
                 "enabled": True,
-                "servers": list(self.mcp_servers.keys()),
+                "servers": self.installed_servers_in_session,
                 "auto_update": False
             }
         }
@@ -362,20 +367,35 @@ class MCPComponent(Component):
                 self.logger.error(error)
             return False
 
-        # Install each MCP server
+        # Get selected servers from config
+        selected_servers = config.get("selected_mcp_servers", [])
+
+        if not selected_servers:
+            self.logger.info("No MCP servers selected for installation.")
+            return self._post_install()
+
+        self.logger.info(f"Installing selected MCP servers: {', '.join(selected_servers)}")
+
+        # Install each selected MCP server
         installed_count = 0
         failed_servers = []
+        self.installed_servers_in_session = []
 
-        for server_name, server_info in self.mcp_servers.items():
-            if self._install_mcp_server(server_info, config):
-                installed_count += 1
+        for server_name in selected_servers:
+            if server_name in self.mcp_servers:
+                server_info = self.mcp_servers[server_name]
+                if self._install_mcp_server(server_info, config):
+                    installed_count += 1
+                    self.installed_servers_in_session.append(server_name)
+                else:
+                    failed_servers.append(server_name)
+
+                    # Check if this is a required server
+                    if server_info.get("required", False):
+                        self.logger.error(f"Required MCP server {server_name} failed to install")
+                        return False
             else:
-                failed_servers.append(server_name)
-                
-                # Check if this is a required server
-                if server_info.get("required", False):
-                    self.logger.error(f"Required MCP server {server_name} failed to install")
-                    return False
+                self.logger.warning(f"Unknown MCP server '{server_name}' selected for installation.")
 
         # Verify installation
         if not config.get("dry_run", False):
@@ -539,7 +559,7 @@ class MCPComponent(Component):
         if installed_version != expected_version:
             errors.append(f"Version mismatch: installed {installed_version}, expected {expected_version}")
         
-        # Check if Claude CLI is available
+        # Check if Claude CLI is available and validate installed servers
         try:
             result = subprocess.run(
                 ["claude", "mcp", "list"],
@@ -548,17 +568,19 @@ class MCPComponent(Component):
                 timeout=60,
                 shell=(sys.platform == "win32")
             )
-            
+
             if result.returncode != 0:
                 errors.append("Could not communicate with Claude CLI for MCP server verification")
             else:
-                # Check if required servers are installed
-                output = result.stdout.lower()
-                for server_name, server_info in self.mcp_servers.items():
-                    if server_info.get("required", False):
-                        if server_name.lower() not in output:
-                            errors.append(f"Required MCP server not found: {server_name}")
-                            
+                claude_mcp_output = result.stdout.lower()
+
+                # Get the list of servers that should be installed from metadata
+                installed_servers = self.settings_manager.get_metadata_setting("mcp.servers", [])
+
+                for server_name in installed_servers:
+                    if server_name.lower() not in claude_mcp_output:
+                        errors.append(f"Installed MCP server '{server_name}' not found in 'claude mcp list' output.")
+
         except Exception as e:
             errors.append(f"Could not verify MCP server installation: {e}")
         
