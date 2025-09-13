@@ -7,7 +7,7 @@ Welcome to SuperClaude Framework development! This guide provides everything you
 ## Table of Contents
 
 1. [Development Setup](#development-setup) - Prerequisites and environment
-2. [Architecture Overview](#architecture-overview) - System components and design  
+2. [Architecture Overview](#architecture-overview) - System components and design
 3. [Context File Guidelines](#context-file-guidelines) - Standards and practices
 4. [Development Workflow](#development-workflow) - Git workflow and submissions
 5. [Contributing to Components](#contributing-to-components) - Agents, commands, modes
@@ -70,7 +70,7 @@ SuperClaude_Framework/
 
 **Key Concepts:**
 - **Context Files**: .md instruction files that guide Claude Code behavior
-- **Agents**: Domain specialists (e.g., security-engineer.md, python-expert.md)  
+- **Agents**: Domain specialists (e.g., security-engineer.md, python-expert.md)
 - **Commands**: Workflow patterns (e.g., implement.md, analyze.md)
 - **Modes**: Interaction modifiers (e.g., brainstorming, introspection)
 - **MCP Integration**: Configuration for Model Context Protocol servers
@@ -93,7 +93,7 @@ User Input → Claude Code → Reads SuperClaude Context → Modified Behavior �
 
 **Context Files (`.md`):**
 - Write clear, actionable instructions for Claude Code
-- Use frontmatter metadata for configuration  
+- Use frontmatter metadata for configuration
 - Follow existing patterns and naming conventions
 - Test instructions produce expected behaviors
 
@@ -109,7 +109,6 @@ User Input → Claude Code → Reads SuperClaude Context → Modified Behavior �
 name: new-specialist
 description: Brief description of expertise
 category: specialized|architecture|quality
-tools: Read, Write, Edit, Bash, Grep
 ---
 
 # Agent Name
@@ -198,7 +197,7 @@ Brief description of context file changes
 
 **Manual Review:**
 - Context file clarity and effectiveness
-- Agent/command logic and triggers  
+- Agent/command logic and triggers
 - Documentation accuracy and completeness
 - Integration with existing components
 - Claude Code behavioral testing results
@@ -275,7 +274,7 @@ Type in Claude Code conversation:
 
 ## Workflow Pattern
 1. Initial analysis
-2. Processing steps  
+2. Processing steps
 3. Validation and output
 
 ## Examples
@@ -326,7 +325,7 @@ grep "@import" ~/.claude/CLAUDE.md
 ### Development Support
 
 **Documentation:**
-- [Technical Architecture](technical-architecture.md) - System design details  
+- [Technical Architecture](technical-architecture.md) - System design details
 - [Verification Guide](testing-debugging.md) - File validation procedures
 
 **Community Channels:**
@@ -359,7 +358,7 @@ grep "@import" ~/.claude/CLAUDE.md
 ### Do's
 ✅ **Follow existing patterns and conventions**
 ✅ **Test context files thoroughly with Claude Code**
-✅ **Write clear, actionable behavioral instructions**  
+✅ **Write clear, actionable behavioral instructions**
 ✅ **Provide working examples**
 ✅ **Focus on user experience improvements**
 ✅ **Coordinate with related components**

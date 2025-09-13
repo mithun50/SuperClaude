@@ -24,7 +24,7 @@ This guide documents how SuperClaude's Context-Oriented Configuration Framework 
 ```
 ~/.claude/ (SuperClaude Framework Files Only)
 ├── CLAUDE.md                       # Main context file with imports
-├── FLAGS.md                        # Flag definitions and triggers  
+├── FLAGS.md                        # Flag definitions and triggers
 ├── RULES.md                        # Core behavioral rules
 ├── PRINCIPLES.md                   # Guiding principles
 ├── ZIG.md                          # Zig language integration
@@ -79,7 +79,7 @@ This guide documents how SuperClaude's Context-Oriented Configuration Framework 
         ├── troubleshoot.md         # Troubleshooting patterns
         └── workflow.md             # Workflow planning patterns
 
-Note: Other directories (backups/, logs/, projects/, serena/, etc.) are Claude Code 
+Note: Other directories (backups/, logs/, projects/, serena/, etc.) are Claude Code
 operational directories, not part of SuperClaude framework content.
 ```
 
@@ -142,7 +142,6 @@ Each agent `.md` file follows this structure:
 name: agent-name
 description: Brief description
 category: specialized|architecture|quality
-tools: Read, Write, Edit, Bash, Grep
 ---
 
 # Agent Name
