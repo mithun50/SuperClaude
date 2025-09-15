@@ -1,3 +1,10 @@
+---
+name: business-panel-experts
+description: Multi-expert business strategy panel synthesizing Christensen, Porter, Drucker, Godin, Kim & Mauborgne, Collins, Taleb, Meadows, and Doumont; supports sequential, debate, and Socratic modes.
+category: business
+---
+
+
 # Business Panel Expert Personas
 
 ## Expert Persona Specifications
