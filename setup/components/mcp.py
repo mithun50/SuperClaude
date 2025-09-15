@@ -190,7 +190,7 @@ class MCPComponent(Component):
                 self.logger.info(f"Would register MCP server run command: {run_command}")
                 return True
 
-            # Run install command (non-blocking)
+            # Run install command
             self.logger.debug(f"Running: {install_command}")
             cmd_parts = shlex.split(install_command)
             result = subprocess.run(
@@ -431,6 +431,7 @@ class MCPComponent(Component):
         return self._post_install()
 
     def _post_install(self) -> bool:
+        """Post-installation tasks"""
         # Update metadata
         try:
             metadata_mods = self.get_metadata_modifications()
@@ -444,12 +445,10 @@ class MCPComponent(Component):
             })
 
             self.logger.info("Updated metadata with MCP component registration")
+            return True
         except Exception as e:
             self.logger.error(f"Failed to update metadata: {e}")
             return False
-
-        return True
-
     
     def uninstall(self) -> bool:
         """Uninstall MCP component"""
@@ -474,7 +473,13 @@ class MCPComponent(Component):
                         self.settings_manager.save_metadata(metadata)
                     self.logger.info("Removed MCP component from metadata")
             except Exception as e:
-                self.logger.exception(f"Unexpected error during MCP uninstallation: {e}")
+                self.logger.warning(f"Could not update metadata: {e}")
+            
+            self.logger.success(f"MCP component uninstalled ({uninstalled_count} servers removed)")
+            return True
+            
+        except Exception as e:
+            self.logger.exception(f"Unexpected error during MCP uninstallation: {e}")
             return False
     
     def get_dependencies(self) -> List[str]:
@@ -602,4 +607,4 @@ class MCPComponent(Component):
             "estimated_size": self.get_size_estimate(),
             "dependencies": self.get_dependencies(),
             "required_tools": ["node", "npm", "claude"]
-        }
+            }
