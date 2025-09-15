@@ -7,57 +7,37 @@ mcp-servers: []
 personas: []
 ---
 
-# /sc:help - Display All Commands
+# /sc:help - All Available Commands
 
-## Functionality
-The `/sc:help` command provides a comprehensive list of all available SuperClaude (`/sc`) commands. It is designed to help users discover the full range of capabilities of the SuperClaude framework. The command dynamically fetches all registered commands and displays their names and a brief description of their functionality.
+Here is a complete list of all available SuperClaude (`/sc`) commands.
 
-## Triggers
-- When a user needs to see all available `/sc` commands.
-- When a user is unsure of what commands are available.
-- When a user is looking for a specific command but does not remember its name.
+| Command | Description |
+|---|---|
+| `/sc:analyze` | Comprehensive code analysis across quality, security, performance, and architecture domains |
+| `/sc:brainstorm` | Interactive requirements discovery through Socratic dialogue and systematic exploration |
+| `/sc:build` | Build, compile, and package projects with intelligent error handling and optimization |
+| `/sc:business-panel` | Multi-expert business analysis with adaptive interaction modes |
+| `/sc:cleanup` | Systematically clean up code, remove dead code, and optimize project structure |
+| `/sc:design` | Design system architecture, APIs, and component interfaces with comprehensive specifications |
+| `/sc:document` | Generate focused documentation for components, functions, APIs, and features |
+| `/sc:estimate` | Provide development estimates for tasks, features, or projects with intelligent analysis |
+| `/sc:explain` | Provide clear explanations of code, concepts, and system behavior with educational clarity |
+| `/sc:git` | Git operations with intelligent commit messages and workflow optimization |
+| `/sc:help` | List all available /sc commands and their functionality |
+| `/sc:implement` | Feature and code implementation with intelligent persona activation and MCP integration |
+| `/sc:improve` | Apply systematic improvements to code quality, performance, and maintainability |
+| `/sc:index` | Generate comprehensive project documentation and knowledge base with intelligent organization |
+| `/sc:load` | Session lifecycle management with Serena MCP integration for project context loading |
+| `/sc:reflect` | Task reflection and validation using Serena MCP analysis capabilities |
+| `/sc:save` | Session lifecycle management with Serena MCP integration for session context persistence |
+| `/sc:select-tool` | Intelligent MCP tool selection based on complexity scoring and operation analysis |
+| `/sc:spawn` | Meta-system task orchestration with intelligent breakdown and delegation |
+| `/sc:spec-panel` | Multi-expert specification review and improvement using renowned specification and software engineering experts |
+| `/sc:task` | Execute complex tasks with intelligent workflow management and delegation |
+| `/sc:test` | Execute tests with coverage analysis and automated quality reporting |
+| `/sc:troubleshoot` | Diagnose and resolve issues in code, builds, deployments, and system behavior |
+| `/sc:workflow` | Generate structured implementation workflows from PRDs and feature requirements |
 
-## Usage
-To use the command, simply type `/sc:help` in the chat.
+---
 
-```
-/sc:help
-```
-
-The command takes no arguments.
-
-## Command Output
-The output will be a formatted list of all available `/sc` commands. Each entry in the list will contain:
-- The command name (e.g., `/sc:analyze`)
-- A brief description of the command's purpose.
-
-The list will be dynamically generated, so it will always be up-to-date with the currently installed commands.
-
-### Example Output
-```
-Here are the available /sc commands:
-
-- /sc:analyze: Perform a detailed analysis of the codebase.
-- /sc:build: Execute the build process for the project.
-- /sc:explain: Provide a detailed explanation of a concept or code block.
-- /sc:help: Display this list of all available commands.
-- ... and so on for all other commands.
-```
-
-## Boundaries
-
-**Will:**
-- Provide a list of all registered `/sc` commands.
-- Display the name and a brief, one-line description of each command.
-- Always provide the most up-to-date list of commands.
-
-**Will Not:**
-- Execute any other command.
-- Provide detailed documentation for each command. For that, use `/sc:explain`.
-- Accept any arguments or flags.
-
-## Pro-Tip
-For more detailed information on a specific command, use the `/sc:explain` command. For example, to learn more about the `/sc:build` command, you can type:
-```
-/sc:explain /sc:build
-```
+**Note:** This list is manually generated and may become outdated. If you suspect it is inaccurate, please consider regenerating it or contacting a maintainer.
