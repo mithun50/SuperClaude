@@ -1,6 +1,6 @@
 # SuperClaude Commands Guide
 
-SuperClaude provides 23 commands for Claude Code: `/sc:*` commands for workflows and `@agent-*` for specialists.
+SuperClaude provides 24 commands for Claude Code: `/sc:*` commands for workflows and `@agent-*` for specialists.
 
 ## Command Types
 
@@ -124,6 +124,14 @@ python3 -m SuperClaude install --list-components | grep mcp
 - New project planning: `/sc:brainstorm "e-commerce platform"`
 - Feature exploration: `/sc:brainstorm "user authentication system"`  
 - Problem solving: `/sc:brainstorm "slow database queries"`
+
+### `/sc:help` - Command Reference
+**Purpose**: Displays a list of all available `/sc` commands and their descriptions.
+**Syntax**: `/sc:help`
+
+**Use Cases**:
+- Discovering available commands: `/sc:help`
+- Getting a quick reminder of command names: `/sc:help`
 
 ### `/sc:implement` - Feature Development  
 **Purpose**: Full-stack feature implementation with intelligent specialist routing  
@@ -292,6 +300,7 @@ python3 -m SuperClaude install --list-components | grep mcp
 ### Utility Commands
 | Command | Purpose | Best For |
 |---------|---------|----------|
+| **help** | List all commands | Discovering available commands |
 | **git** | Version control | Commit management, branch strategies |
 | **index** | Command discovery | Exploring capabilities, finding commands |
 
@@ -313,10 +322,10 @@ python3 -m SuperClaude install --list-components | grep mcp
 - **Analysis**: analyze, business-panel, spec-panel, troubleshoot, explain  
 - **Quality**: improve, cleanup, test, document
 - **Management**: task, spawn, load, save, reflect
-- **Utility**: index, select-tool
+- **Utility**: help, index, select-tool
 
 **By Complexity:**
-- **Beginner**: brainstorm, implement, analyze, test
+- **Beginner**: brainstorm, implement, analyze, test, help
 - **Intermediate**: workflow, design, business-panel, spec-panel, improve, document  
 - **Advanced**: spawn, task, select-tool, reflect
 

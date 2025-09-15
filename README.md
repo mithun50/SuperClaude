@@ -55,8 +55,10 @@
 
 | **Commands** | **Agents** | **Modes** | **MCP Servers** |
 |:------------:|:----------:|:---------:|:---------------:|
-| **23** | **14** | **6** | **6** |
+| **24** | **14** | **6** | **6** |
 | Slash Commands | Specialized AI | Behavioral | Integrations |
+
+Use the new `/sc:help` command to see a full list of all available commands.
 
 </div>
 
