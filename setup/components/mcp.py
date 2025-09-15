@@ -52,7 +52,7 @@ class MCPComponent(Component):
                 "name": "serena",
                 "description": "Semantic code analysis and intelligent editing",
                 "install_method": "uv",
-                "install_command": "uv tool install --from git+https://github.com/oraios/serena serena",
+                "install_command": "uv tool install --from git+https://github.com/oraios/serena serena-agent",
                 "run_command": "serena start-mcp-server --context ide-assistant --project $(pwd)",
                 "required": False
             },
