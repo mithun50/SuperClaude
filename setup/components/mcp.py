@@ -52,7 +52,7 @@ class MCPComponent(Component):
                 "name": "serena",
                 "description": "Semantic code analysis and intelligent editing",
                 "install_method": "uv",
-                "install_command": "uvx --from git+https://github.com/oraios/serena",
+                "install_command": "uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project $(pwd)",
                 "required": False
             },
             "morphllm": {
