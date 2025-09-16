@@ -70,6 +70,12 @@ Use the new `/sc:help` command to see a full list of all available commands.
 
 SuperClaude is a **meta-programming configuration framework** that transforms Claude Code into a structured development platform through behavioral instruction injection and component orchestration. It provides systematic workflow automation with powerful tools and intelligent agents.
 
+
+## Disclaimer
+
+This project is not affiliated with or endorsed by Anthropic.  
+Claude Code is a product built and maintained by [Anthropic](https://www.anthropic.com/).
+
 ## ⚡ **Quick Installation**
 
 ### **Choose Your Installation Method**
