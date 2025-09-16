@@ -8,7 +8,7 @@
   <a href="https://github.com/hesreallyhim/awesome-claude-code/">
   <img src="https://awesome.re/mentioned-badge-flat.svg" alt="Mentioned in Awesome Claude Code">
   </a>
-  <img src="https://img.shields.io/badge/version-4.1.0-blue" alt="Version"> 
+  <img src="https://img.shields.io/badge/version-4.1.1-blue" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
 </p>

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.1.1] - 2025-09-15
+### Changed
+- Version bump from 4.1.0 to 4.1.1
+
 ## [4.1.0] - 2025-09-13
 ### Added
 - Display author names and emails in the installer UI header.
@@ -26,7 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added the `claude` CLI as a formal prerequisite for MCP server management, which was previously undocumented.
 
 ### Changed
-- Version bump to 4.1.0
 
 ### Technical
 - Prepared package for PyPI distribution
