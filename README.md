@@ -8,6 +8,12 @@
   <a href="https://github.com/hesreallyhim/awesome-claude-code/">
   <img src="https://awesome.re/mentioned-badge-flat.svg" alt="Mentioned in Awesome Claude Code">
   </a>
+<a href="https://github.com/SuperClaude-Org/DuperGemini_Framework" target="_blank">
+  <img src="https://img.shields.io/badge/Try-SuperGemini_Framework-blue" alt="Try SuperGemini Framework"/>
+</a>
+<a href="https://github.com/SuperClaude-Org/SuperQwen_Framework" target="_blank">
+  <img src="https://img.shields.io/badge/Try-SuperQwen_Framework-orange" alt="Try SuperQwen Framework"/>
+</a>
   <img src="https://img.shields.io/badge/version-4.1.1-blue" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
