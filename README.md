@@ -8,7 +8,7 @@
   <a href="https://github.com/hesreallyhim/awesome-claude-code/">
   <img src="https://awesome.re/mentioned-badge-flat.svg" alt="Mentioned in Awesome Claude Code">
   </a>
-<a href="https://github.com/SuperClaude-Org/DuperGemini_Framework" target="_blank">
+<a href="https://github.com/SuperClaude-Org/SuperGemini_Framework" target="_blank">
   <img src="https://img.shields.io/badge/Try-SuperGemini_Framework-blue" alt="Try SuperGemini Framework"/>
 </a>
 <a href="https://github.com/SuperClaude-Org/SuperQwen_Framework" target="_blank">
