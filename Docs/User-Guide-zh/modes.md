@@ -297,10 +297,10 @@ Standard Approach: Consistent, professional baseline for all tasks
 /sc:implement "user login" --brainstorm
 
 # 为调试添加推理透明度
-/sc:fix auth-issue --introspect
+# 使用透明推理调试认证问题
 
 # 为简单操作启用任务管理
-/sc:update styles.css --task-manage
+# 系统化任务管理更新样式文件
 ```
 
 ### 模式边界和优先级
@@ -337,7 +337,7 @@ Standard Approach: Consistent, professional baseline for all tasks
 → 🎯 带质量门控的阶段协调
 
 # 阶段 3：实现（编排模式协调工具）
-/sc:develop frontend + backend
+/sc:implement "frontend and backend systems"
 → 🎯 Magic (UI) + Context7 (模式) + Sequential (架构)
 → ⚡ 并行执行优化
 ```
@@ -351,7 +351,7 @@ Standard Approach: Consistent, professional baseline for all tasks
 → 💡 跨相似问题的模式识别
 
 # 系统性解决（任务管理协调）
-/sc:fix auth-system --comprehensive
+# 全面修复认证系统
 → 📋 阶段 1：根因分析
 → 📋 阶段 2：解决方案实现
 → 📋 阶段 3：测试和验证
@@ -362,7 +362,7 @@ Standard Approach: Consistent, professional baseline for all tasks
 **高复杂度场景：**
 ```bash
 # 带多重约束的大型重构
-/sc:modernize legacy-system/ --introspect --uc --orchestrate
+/sc:improve legacy-system/ --introspect --uc --orchestrate
 → 🔍 透明推理introspect（内省）
 → ⚡ 压缩通信uc（令牌效率）
 → 🎯 最优工具协调orchestrate（编排）
@@ -436,7 +436,7 @@ Standard Approach: Consistent, professional baseline for all tasks
 # 问题：简单任务得到复杂协调
 # 快速修复：减少范围或使用更简单的命令
 /sc:implement "function" --no-task-manage     # 禁用协调
-/sc:simple-fix bug.js                         # 使用基本命令
+/sc:troubleshoot bug.js                       # 使用基本命令
 # 检查任务是否真正复杂（>3 文件，>2 目录）
 ```
 

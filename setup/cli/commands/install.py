@@ -6,6 +6,7 @@ Refactored from install.py for unified CLI hub
 import sys
 import time
 from pathlib import Path
+from ...utils.paths import get_home_directory
 from typing import List, Optional, Dict, Any
 import argparse
 
@@ -125,16 +126,28 @@ def get_components_to_install(args: argparse.Namespace, registry: ComponentRegis
         else:
             components = args.components
 
-        # If mcp is specified non-interactively, we should still ask which servers to install.
-        if 'mcp' in components:
+        # If mcp or mcp_docs is specified non-interactively, we should still ask which servers to install.
+        if 'mcp' in components or 'mcp_docs' in components:
             selected_servers = select_mcp_servers(registry)
             if not hasattr(config_manager, '_installation_context'):
                 config_manager._installation_context = {}
             config_manager._installation_context["selected_mcp_servers"] = selected_servers
 
-            # If the user selected some servers, but didn't select mcp_docs, add it.
-            if selected_servers and 'mcp_docs' not in components:
-                components.append('mcp_docs')
+            # If the user selected some servers, ensure both mcp and mcp_docs are included
+            if selected_servers:
+                if 'mcp' not in components:
+                    components.append('mcp')
+                    logger.debug(f"Auto-added 'mcp' component for selected servers: {selected_servers}")
+                if 'mcp_docs' not in components:
+                    components.append('mcp_docs')
+                    logger.debug(f"Auto-added 'mcp_docs' component for selected servers: {selected_servers}")
+
+                logger.info(f"Final components to install: {components}")
+
+            # If mcp_docs was explicitly requested but no servers selected, allow auto-detection
+            elif not selected_servers and 'mcp_docs' in components:
+                logger.info("mcp_docs component will auto-detect existing MCP servers")
+                logger.info("Documentation will be installed for any detected servers")
 
         return components
     
@@ -187,7 +200,7 @@ def select_mcp_servers(registry: ComponentRegistry) -> List[str]:
     
     try:
         # Get MCP component to access server list
-        mcp_instance = registry.get_component_instance("mcp", Path.home() / ".claude")
+        mcp_instance = registry.get_component_instance("mcp", get_home_directory() / ".claude")
         if not mcp_instance or not hasattr(mcp_instance, 'mcp_servers'):
             logger.error("Could not access MCP server information")
             return []
@@ -526,7 +539,7 @@ def run(args: argparse.Namespace) -> int:
     operation.setup_operation_logging(args)
     logger = get_logger()
     # ✅ Enhanced security validation with symlink protection
-    expected_home = Path.home().resolve()
+    expected_home = get_home_directory().resolve()
     install_dir_original = args.install_dir
     install_dir_resolved = args.install_dir.resolve()
 

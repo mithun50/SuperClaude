@@ -358,10 +358,10 @@ Standard Approach: Consistent, professional baseline for all tasks
 /sc:implement "user login" --brainstorm
 
 # Add reasoning transparency to debugging
-/sc:fix auth-issue --introspect
+# 認証問題を透明な推理でデバッグ
 
 # Enable task management for simple operations
-/sc:update styles.css --task-manage
+# システマチックなタスク管理でスタイルファイルを更新
 ```
 
 ### モードの境界と優先順位
@@ -407,7 +407,7 @@ Standard Approach: Consistent, professional baseline for all tasks
 → 🎯 Phase coordination with quality gates
 
 # Phase 3: Implementation (Orchestration Mode coordinates tools)
-/sc:develop frontend + backend
+/sc:implement "frontend and backend systems"
 → 🎯 Magic (UI) + Context7 (patterns) + Sequential (architecture)
 → ⚡ Parallel execution optimization
 ```
@@ -422,7 +422,7 @@ Standard Approach: Consistent, professional baseline for all tasks
 → 💡 Pattern recognition across similar issues
 
 # Systematic resolution (Task Management coordinates)
-/sc:fix auth-system --comprehensive
+# 認証システムを包括的に修正
 → 📋 Phase 1: Root cause analysis
 → 📋 Phase 2: Solution implementation  
 → 📋 Phase 3: Testing and validation
@@ -436,7 +436,7 @@ Standard Approach: Consistent, professional baseline for all tasks
 
 ```shell
 # Large refactoring with multiple constraints
-/sc:modernize legacy-system/ --introspect --uc --orchestrate
+/sc:improve legacy-system/ --introspect --uc --orchestrate
 → 🔍 Transparent reasoning (Introspection)
 → ⚡ Compressed communication (Token Efficiency)  
 → 🎯 Optimal tool coordination (Orchestration)
@@ -529,7 +529,7 @@ Standard Approach: Consistent, professional baseline for all tasks
 # Problem: Simple tasks getting complex coordination
 # Quick Fix: Reduce scope or use simpler commands
 /sc:implement "function" --no-task-manage     # Disable coordination
-/sc:simple-fix bug.js                         # Use basic commands
+/sc:troubleshoot bug.js                       # Use basic commands
 # Check if task really is complex (>3 files, >2 directories)
 ```
 

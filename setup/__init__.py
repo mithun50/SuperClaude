@@ -8,7 +8,7 @@ from pathlib import Path
 try:
     __version__ = (Path(__file__).parent.parent / "VERSION").read_text().strip()
 except Exception:
-    __version__ = "4.1.3"  # Fallback
+    __version__ = "4.1.4"  # Fallback
 
 __author__ = "NomenAK, Mithun Gowda B"
 
@@ -17,5 +17,8 @@ SETUP_DIR = Path(__file__).parent
 PROJECT_ROOT = SETUP_DIR.parent
 DATA_DIR = SETUP_DIR / "data"
 
+# Import home directory detection for immutable distros
+from .utils.paths import get_home_directory
+
 # Installation target
-DEFAULT_INSTALL_DIR = Path.home() / ".claude"
+DEFAULT_INSTALL_DIR = get_home_directory() / ".claude"
