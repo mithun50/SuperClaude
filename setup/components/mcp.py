@@ -110,11 +110,11 @@ class MCPComponent(Component):
             # macOS/Linux: Use string format with proper shell to support aliases
             cmd_str = " ".join(shlex.quote(str(arg)) for arg in cmd)
 
-            # Use the user's shell with interactive mode to load aliases
+            # Use the user's shell to execute the command
             user_shell = os.environ.get('SHELL', '/bin/bash')
 
-            # Execute command with user's shell in interactive mode to load aliases
-            full_cmd = f"{user_shell} -i -c {shlex.quote(cmd_str)}"
+            # Execute command with user's shell
+            full_cmd = f"{user_shell} -c {shlex.quote(cmd_str)}"
             return subprocess.run(full_cmd, shell=True, env=os.environ, **kwargs)
     
     def validate_prerequisites(self, installSubPath: Optional[Path] = None) -> Tuple[bool, List[str]]:
