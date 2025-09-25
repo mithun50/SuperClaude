@@ -76,6 +76,13 @@ class MCPComponent(Component):
                 "required": False,
                 "api_key_env": "TAVILY_API_KEY",
                 "api_key_description": "Tavily API key for web search (get from https://app.tavily.com)"
+            },
+            "chrome-devtools": {
+                "name": "chrome-devtools",
+                "description": "Chrome DevTools debugging and performance analysis",
+                "install_method": "npm",
+                "install_command": "npx -y chrome-devtools-mcp@latest",
+                "required": False
             }
         }
     
