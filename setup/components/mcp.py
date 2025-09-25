@@ -104,18 +104,16 @@ class MCPComponent(Component):
             CompletedProcess result
         """
         if platform.system() == "Windows":
-            # Windows: Use list format with shell=True
-            return subprocess.run(cmd, shell=True, **kwargs)
+            # On Windows, wrap command in 'cmd /c' to properly handle commands like npx
+            cmd = ["cmd", "/c"] + cmd
+            return subprocess.run(cmd, **kwargs)
         else:
             # macOS/Linux: Use string format with proper shell to support aliases
             cmd_str = " ".join(shlex.quote(str(arg)) for arg in cmd)
 
-            # Use the user's shell to execute the command
+            # Use the user's shell to execute the command, supporting aliases
             user_shell = os.environ.get('SHELL', '/bin/bash')
-
-            # Execute command with user's shell
-            full_cmd = f"{user_shell} -c {shlex.quote(cmd_str)}"
-            return subprocess.run(full_cmd, shell=True, env=os.environ, **kwargs)
+            return subprocess.run(cmd_str, shell=True, env=os.environ, executable=user_shell, **kwargs)
     
     def validate_prerequisites(self, installSubPath: Optional[Path] = None) -> Tuple[bool, List[str]]:
         """Check prerequisites"""
