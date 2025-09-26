@@ -2,7 +2,7 @@
 
 ## Overview
 
-MCP (Model Context Protocol) servers extend Claude Code's capabilities through specialized tools. SuperClaude integrates 7 MCP servers and provides Claude with instructions on when to activate them based on your tasks.
+MCP (Model Context Protocol) servers extend Claude Code's capabilities through specialized tools. SuperClaude integrates 8 MCP servers and provides Claude with instructions on when to activate them based on your tasks.
 
 ### 🔍 Reality Check
 - **What MCP servers are**: External Node.js processes that provide additional tools
@@ -18,6 +18,7 @@ MCP (Model Context Protocol) servers extend Claude Code's capabilities through s
 - **morphllm-fast-apply**: Pattern-based code transformations
 - **serena**: Semantic code understanding and project memory
 - **tavily**: Web search and real-time information retrieval
+- **chrome-devtools**: Performance analysis and debugging
 
 ## Quick Start
 
@@ -34,6 +35,7 @@ MCP (Model Context Protocol) servers extend Claude Code's capabilities through s
 | Multi-file edits, refactoring | **morphllm-fast-apply** |
 | Large projects, sessions | **serena** |
 | `/sc:research`, `latest`, `current` | **tavily** |
+| `performance`, `debug`, `LCP` | **chrome-devtools** |
 
 ## Server Details
 
@@ -138,6 +140,20 @@ export MORPH_API_KEY="your_key_here"
 export TAVILY_API_KEY="tvly-your_api_key_here"
 ```
 
+### chrome-devtools 📊
+**Purpose**: Performance analysis, debugging, and real-time browser inspection
+**Triggers**: Performance auditing, debugging layout issues (e.g., CLS), slow loading times (LCP), console errors, network requests
+**Requirements**: Node.js 16+, no API key
+
+```bash
+# Automatic activation
+/sc:debug "page is loading slowly"
+# → Enables performance analysis with Chrome DevTools
+
+# Manual activation
+/sc:analyze --performance "homepage"
+```
+
 **Capabilities:**
 - **Web Search**: Comprehensive searches with ranking and filtering
 - **News Search**: Time-filtered current events and updates
@@ -187,6 +203,10 @@ export TAVILY_API_KEY="tvly-your_api_key_here"
       "command": "npx",
       "args": ["-y", "tavily-mcp@latest"],
       "env": {"TAVILY_API_KEY": "${TAVILY_API_KEY}"}
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
     }
   }
 }
@@ -282,6 +302,7 @@ echo 'export TAVILY_API_KEY="your_key"' >> ~/.bashrc
 - **Complex Analysis**: sequential-thinking + context7 + serena
 - **Deep Research**: tavily + sequential-thinking + serena + playwright
 - **Current Events**: tavily + context7 + sequential-thinking
+- **Performance Tuning**: chrome-devtools + sequential-thinking + playwright
 
 ## Integration
 
