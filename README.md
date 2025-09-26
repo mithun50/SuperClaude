@@ -61,7 +61,7 @@
 
 | **Commands** | **Agents** | **Modes** | **MCP Servers** |
 |:------------:|:----------:|:---------:|:---------------:|
-| **25** | **15** | **7** | **7** |
+| **25** | **15** | **7** | **8** |
 | Slash Commands | Specialized AI | Behavioral | Integrations |
 
 Use the new `/sc:help` command to see a full list of all available commands.
@@ -227,7 +227,7 @@ pip install --break-system-packages SuperClaude
 <td width="50%">
 
 ### 🔧 **MCP Server Integration**
-**7 powerful servers** working together:
+**8 powerful servers** working together:
 - **Context7** → Up-to-date documentation
 - **Sequential** → Complex analysis
 - **Magic** → UI component generation
@@ -235,6 +235,7 @@ pip install --break-system-packages SuperClaude
 - **Morphllm** → Bulk transformations
 - **Serena** → Session persistence
 - **Tavily** → Web search for deep research
+- **Chrome DevTools** → Performance analysis
 
 </td>
 <td width="50%">
