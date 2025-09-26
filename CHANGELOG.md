@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `TAVILY_API_KEY` environment variable for web search functionality
 - Node.js and npm for Tavily MCP execution
 
-## [4.1.4] - 2025-09-20
+## [4.1.5] - 2025-09-26
 ### Added
 - Comprehensive flag documentation integrated into `/sc:help` command
 - All 25 SuperClaude framework flags now discoverable from help system
